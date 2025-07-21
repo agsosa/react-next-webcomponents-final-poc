@@ -32,12 +32,11 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          {/* <link 
-            rel="preload" 
+          <link 
+            rel="prefetch" 
             href="http://localhost:3002/web-components-vite/web-components.umd.js" 
-            as="script" 
             crossOrigin="anonymous"
-          /> */}
+          />
         </Head>
         <body>
           <Main />
