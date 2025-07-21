@@ -4,9 +4,7 @@ import type { AppProps } from "next/app";
 import { Fragment, useEffect } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
-    useEffect(() => {
-    document.body.classList.add("ready");
-  }, [])
+
   return (
     <Fragment>
       <RemoteHeader />
