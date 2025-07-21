@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   compiler: {
     styledComponents: true,
   },
+  publicRuntimeConfig: {
+    fulfilmentUrl: process.env.NEXT_PUBLIC_FULFILMENT_URL,
+  },
 };
 
 export default nextConfig;

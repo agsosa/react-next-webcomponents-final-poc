@@ -31,7 +31,14 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head />
+        <Head>
+          {/* <link 
+            rel="preload" 
+            href="http://localhost:3002/web-components-vite/web-components.umd.js" 
+            as="script" 
+            crossOrigin="anonymous"
+          /> */}
+        </Head>
         <body>
           <Main />
           <NextScript />
