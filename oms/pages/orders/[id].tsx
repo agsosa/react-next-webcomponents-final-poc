@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -30,12 +31,42 @@ const Header = styled.h1`
   margin-bottom: 30px;
 `;
 
-const OrderCard = styled.div`
+const TabsContainer = styled.div`
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  padding: 30px;
   margin-bottom: 20px;
+  overflow: hidden;
+`;
+
+const TabsList = styled.div`
+  display: flex;
+  background: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+`;
+
+const Tab = styled.button<{ active: boolean }>`
+  background: ${props => props.active ? 'white' : 'transparent'};
+  border: none;
+  padding: 15px 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  color: ${props => props.active ? '#333' : '#666'};
+  border-bottom: ${props => props.active ? '3px solid #007bff' : '3px solid transparent'};
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: ${props => props.active ? 'white' : '#e9ecef'};
+  }
+`;
+
+const TabContent = styled.div`
+  padding: 30px;
+`;
+
+const OrderCard = styled.div`
+  /* Removed since we're now using TabContent */
 `;
 
 const OrderHeader = styled.div`
@@ -143,6 +174,64 @@ const TotalAmount = styled.div`
   color: #333;
 `;
 
+const EmptyTabMessage = styled.div`
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+  
+  h3 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+`;
+
+const PostventaSection = styled.div`
+  margin-top: 30px;
+  padding: 20px;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  background: #f8f9fa;
+`;
+
+const PostventaSectionTitle = styled.h3`
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+  &::before {
+    content: '📞';
+    font-size: 1.2rem;
+  }
+`;
+
+const PostventaPlaceholder = styled.div`
+  background: white;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  padding: 30px;
+  text-align: center;
+  color: #666;
+  
+  h4 {
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 1rem;
+  }
+  
+  p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+`;
+
 type OrderItem = {
   id: string;
   name: string;
@@ -203,6 +292,7 @@ const mockOrderDetails: Record<string, OrderDetail> = {
 export default function OrderDetail() {
   const router = useRouter();
   const { id } = router.query;
+  const [activeTab, setActiveTab] = useState<'order' | 'shipment'>('order');
   
   const order = typeof id === 'string' ? mockOrderDetails[id] : null;
 
@@ -230,69 +320,113 @@ export default function OrderDetail() {
       <Container>
         <BackLink onClick={() => window.location.href = '/'}>← Back to Orders</BackLink>
         
-        <OrderCard>
-          <OrderHeader>
-            <OrderId>Order {order.id}</OrderId>
-            <StatusBadge status={order.status}>
-              {order.status}
-            </StatusBadge>
-          </OrderHeader>
+        <TabsContainer>
+          <TabsList>
+            <Tab 
+              active={activeTab === 'order'} 
+              onClick={() => setActiveTab('order')}
+            >
+              Order Details
+            </Tab>
+            <Tab 
+              active={activeTab === 'shipment'} 
+              onClick={() => setActiveTab('shipment')}
+            >
+              Shipment Info
+            </Tab>
+          </TabsList>
 
-          <InfoGrid>
-            <InfoItem>
-              <h3>Customer</h3>
-              <p>{order.customer}</p>
-            </InfoItem>
-            <InfoItem>
-              <h3>Email</h3>
-              <p>{order.email}</p>
-            </InfoItem>
-            <InfoItem>
-              <h3>Order Date</h3>
-              <p>{order.date}</p>
-            </InfoItem>
-            <InfoItem>
-              <h3>Total Items</h3>
-              <p>{order.items.reduce((sum, item) => sum + item.quantity, 0)}</p>
-            </InfoItem>
-          </InfoGrid>
+          <TabContent>
+            {activeTab === 'order' && (
+              <>
+                <OrderHeader>
+                  <OrderId>Order {order.id}</OrderId>
+                  <StatusBadge status={order.status}>
+                    {order.status}
+                  </StatusBadge>
+                </OrderHeader>
 
-          <InfoItem>
-            <h3>Shipping Address</h3>
-            <p>{order.shippingAddress}</p>
-          </InfoItem>
+                <InfoGrid>
+                  <InfoItem>
+                    <h3>Customer</h3>
+                    <p>{order.customer}</p>
+                  </InfoItem>
+                  <InfoItem>
+                    <h3>Email</h3>
+                    <p>{order.email}</p>
+                  </InfoItem>
+                  <InfoItem>
+                    <h3>Order Date</h3>
+                    <p>{order.date}</p>
+                  </InfoItem>
+                  <InfoItem>
+                    <h3>Total Items</h3>
+                    <p>{order.items.reduce((sum, item) => sum + item.quantity, 0)}</p>
+                  </InfoItem>
+                </InfoGrid>
 
-          <ItemsSection>
-            <SectionTitle>Order Items</SectionTitle>
-            <ItemsTable>
-              <thead>
-                <tr>
-                  <TableHeader>Item</TableHeader>
-                  <TableHeader>Quantity</TableHeader>
-                  <TableHeader>Price</TableHeader>
-                  <TableHeader>Total</TableHeader>
-                </tr>
-              </thead>
-              <tbody>
-                {order.items.map(item => (
-                  <tr key={item.id}>
-                    <TableCell>{item.name}</TableCell>
-                    <TableCell>{item.quantity}</TableCell>
-                    <TableCell>${item.price.toFixed(2)}</TableCell>
-                    <TableCell>${(item.quantity * item.price).toFixed(2)}</TableCell>
-                  </tr>
-                ))}
-              </tbody>
-            </ItemsTable>
+                <InfoItem>
+                  <h3>Shipping Address</h3>
+                  <p>{order.shippingAddress}</p>
+                </InfoItem>
 
-            <TotalSection>
-              <div style={{marginBottom: '5px'}}>Subtotal: ${order.subtotal.toFixed(2)}</div>
-              <div style={{marginBottom: '5px'}}>Shipping: ${order.shipping.toFixed(2)}</div>
-              <div style={{marginBottom: '10px'}}>Tax: ${order.tax.toFixed(2)}</div>
-              <TotalAmount>Total: ${order.total.toFixed(2)}</TotalAmount>
-            </TotalSection>
-          </ItemsSection>
-        </OrderCard>
+                <PostventaSection>
+                  <PostventaSectionTitle>
+                    Customer Support
+                  </PostventaSectionTitle>
+                  <PostventaPlaceholder>
+                    <h4>Formulario de Soporte Posventa</h4>
+                    <p>
+                      Aquí se integrará el formulario de consultas de posventa<br />
+                      mediante web components para gestionar incidencias del cliente.
+                    </p>
+                  </PostventaPlaceholder>
+                </PostventaSection>
+
+                <ItemsSection>
+                  <SectionTitle>Order Items</SectionTitle>
+                  <ItemsTable>
+                    <thead>
+                      <tr>
+                        <TableHeader>Item</TableHeader>
+                        <TableHeader>Quantity</TableHeader>
+                        <TableHeader>Price</TableHeader>
+                        <TableHeader>Total</TableHeader>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {order.items.map(item => (
+                        <tr key={item.id}>
+                          <TableCell>{item.name}</TableCell>
+                          <TableCell>{item.quantity}</TableCell>
+                          <TableCell>${item.price.toFixed(2)}</TableCell>
+                          <TableCell>${(item.quantity * item.price).toFixed(2)}</TableCell>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </ItemsTable>
+
+                  <TotalSection>
+                    <div style={{marginBottom: '5px'}}>Subtotal: ${order.subtotal.toFixed(2)}</div>
+                    <div style={{marginBottom: '5px'}}>Shipping: ${order.shipping.toFixed(2)}</div>
+                    <div style={{marginBottom: '10px'}}>Tax: ${order.tax.toFixed(2)}</div>
+                    <TotalAmount>Total: ${order.total.toFixed(2)}</TotalAmount>
+                  </TotalSection>
+                </ItemsSection>
+              </>
+            )}
+
+            {activeTab === 'shipment' && (
+              <EmptyTabMessage>
+                <h3>Shipment Information</h3>
+                <p>
+                  La información de envío se cargará aquí mediante web components.<br />
+                  Esta funcionalidad se implementará próximamente.
+                </p>
+              </EmptyTabMessage>
+            )}
+          </TabContent>
+        </TabsContainer>
       </Container>
     </>
   );
