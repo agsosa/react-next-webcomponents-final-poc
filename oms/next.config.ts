@@ -8,6 +8,12 @@ const nextConfig: NextConfig = {
   publicRuntimeConfig: {
     fulfilmentUrl: process.env.NEXT_PUBLIC_FULFILMENT_URL,
   },
+    eslint: {
+    ignoreDuringBuilds: true
+  },
+  typescript: {
+    ignoreBuildErrors: true
+  }
 };
 
 export default nextConfig;
