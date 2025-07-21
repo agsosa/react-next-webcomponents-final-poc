@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import Header from "../../components/Header";
+import Header from "../../web-components/Header";
 
 const PageContainer = styled.div`
   min-height: 100vh;
