@@ -44,14 +44,16 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <link
+          {/* <link
             rel="preload"
             href={fulfilmentUrl + "/web-components-vite/web-components.umd.js"}
             as="script"
             crossOrigin="anonymous"
           />
           <link rel="dns-prefetch" href={"//" + new URL(fulfilmentUrl).host} />
-          <link rel="preconnect" href={fulfilmentUrl} crossOrigin="anonymous" />
+          <link rel="preconnect" href={fulfilmentUrl} crossOrigin="anonymous" /> */}
+                    <script defer async src={fulfilmentUrl + "/web-components-vite/web-components.umd.js"} />
+
         </Head>
         <body>
           <Main />
