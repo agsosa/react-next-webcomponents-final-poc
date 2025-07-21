@@ -10,7 +10,20 @@ const nextConfig: NextConfig = {
   },
   typescript: {
     ignoreBuildErrors: true
-  }
+  },
+  async headers() {
+    return [
+      {
+        source: '/web-components-vite/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=300, stale-while-revalidate=86400',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
