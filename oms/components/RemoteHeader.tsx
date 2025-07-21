@@ -1,12 +1,14 @@
 import getConfig from "next/config";
 import Script from "next/script";
 
-export default function RemoteHeader() {
-  const { publicRuntimeConfig: { fulfilmentUrl } } = getConfig();
+function Server_RemoteHeader() {
+  const {
+    publicRuntimeConfig: { fulfilmentUrl },
+  } = getConfig();
 
   return (
     <>
-      <Script 
+      <Script
         src={fulfilmentUrl + "/web-components-vite/web-components.umd.js"}
         strategy="afterInteractive"
       />
@@ -14,3 +16,5 @@ export default function RemoteHeader() {
     </>
   );
 }
+
+export default Server_RemoteHeader;
