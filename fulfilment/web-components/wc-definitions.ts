@@ -1,14 +1,9 @@
-/*import Button from "../shared/Button";
-import Card from "../shared/Card";
-import Footer from "../shared/Footer";*/
 import Header from "./Header";
+import ShipmentDetails from "./ShipmentDetails";
 
 import r2wc from "@r2wc/react-to-web-component";
-//import { exportConfigToWindow } from "../../utils/configBridge";
 
-//console.log("process.env on build", process.env.NEXT_PUBLIC_TEST)
-
-// definir interface para este array
+// Web components configuration
 const WebComponents = [
   {
     element: "backoffice-header",
@@ -21,23 +16,31 @@ const WebComponents = [
       onLoad: { bubbles: true }
     }
   },
-  /*{
-    element: "my-button",
-    component: Button,
-    props: { label: "string", onClick: "function" },
-  },
   {
-    element: "my-card",
-    component: Card,
+    element: "shipment-details",
+    component: ShipmentDetails,
+    props: {
+      // Shipment data props
+      shipmentId: "string",
+      shipmentData: "string", // JSON string for web component
+      apiUrl: "string",
+      
+      // Display options
+      showTimeline: "boolean",
+      showTrackingSection: "boolean", 
+      compactMode: "boolean",
+      
+      // Event handlers
+      onTrackingClick: "function",
+      onError: "function",
+      onLoad: "function"
+    },
+    events: {
+      onLoad: { bubbles: true },
+      onError: { bubbles: true },
+      onTrackingClick: { bubbles: true }
+    }
   },
-  {
-    element: "my-footer",
-    component: Footer,
-  },
-    {
-    element: "my-header",
-    component: Header,
-  },*/
 ];
 
 // Ensure DOM is ready before registering components
@@ -67,7 +70,6 @@ function onConsumerAppLoadedScript() {
   }
 }
 
-// Register immediately if DOM is ready, otherwise wait
 if (typeof document !== "undefined" && document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", onConsumerAppLoadedScript);
 } else {

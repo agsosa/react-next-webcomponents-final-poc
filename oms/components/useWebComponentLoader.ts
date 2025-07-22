@@ -1,8 +1,94 @@
-import { useEffect, useState } from "react";
+import { createElement, useEffect, useRef, useState } from "react";
 
 // Simple cache to avoid loading the same resources multiple times
 const loadedResources = new Set<string>();
 
+interface WebComponentRendererProps {
+  elementName: string;
+  [key: string]: any;
+}
+
+export const useWebComponentRenderer = ({ elementName, ...props }: WebComponentRendererProps) => {
+  const registeredFunctions = useRef(new Set<string>());
+  const elementRef = useRef<HTMLElement | null>(null);
+  
+  // Separate functions from other props
+  const propsWithoutFunctions = Object.fromEntries(
+    Object.entries(props).filter(([key, value]) => typeof value !== "function")
+  );
+
+  const propsWithFunctions = Object.fromEntries(
+    Object.entries(props).filter(([key, value]) => typeof value === "function")
+  );
+
+  useEffect(() => {
+    // Wait for element to be available in DOM
+    const waitForElement = () => {
+      const element = elementRef.current || document.querySelector(elementName);
+      
+      if (!element) {
+        // Element not ready yet, try again
+        requestAnimationFrame(waitForElement);
+        return;
+      }
+
+      // Store reference
+      elementRef.current = element as HTMLElement;
+
+      // Register functions and bind to element
+      for (const [key, value] of Object.entries(propsWithFunctions)) {
+        if (typeof value === "function") {
+          const uniqueFunctionName = `__wc_${elementName.replace(/-/g, '_')}_${key}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+          
+          console.log(`✅ WebComponentLoader: Registering ${key} -> ${uniqueFunctionName}`);
+          
+          // Register globally for web component access
+          (window as any)[uniqueFunctionName] = value;
+          registeredFunctions.current.add(uniqueFunctionName);
+          
+          // Bind to element in multiple ways for maximum compatibility
+          element.setAttribute(`on-${key.toLowerCase()}`, uniqueFunctionName);
+          (element as any)[key] = value;
+          
+          // Also try camelCase for React-style props
+          const camelCaseKey = key.charAt(0).toLowerCase() + key.slice(1);
+          (element as any)[camelCaseKey] = value;
+        }
+      }
+
+      // Set other props as attributes and properties
+      for (const [key, value] of Object.entries(propsWithoutFunctions)) {
+        if (value !== undefined && value !== null) {
+          element.setAttribute(key.toLowerCase(), String(value));
+          (element as any)[key] = value;
+        }
+      }
+
+      console.log(`🎯 WebComponentLoader: ${elementName} configured with`, Object.keys(props));
+    };
+
+    waitForElement();
+
+    // Cleanup function
+    return () => {
+      registeredFunctions.current.forEach(functionName => {
+        console.log(`🧹 WebComponentLoader: Cleaning up ${functionName}`);
+        delete (window as any)[functionName];
+      });
+      registeredFunctions.current.clear();
+    };
+  }, [elementName, JSON.stringify(props)]);
+
+  // Return the basic element - functions will be bound by useEffect
+  return createElement(elementName, propsWithoutFunctions);
+};
+
+// Component wrapper for easier usage
+export const WebComponentRenderer = ({ elementName, ...props }: WebComponentRendererProps) => {
+  return useWebComponentRenderer({ elementName, ...props });
+};
+
+// Original hook for loading resources
 const useWebComponentsRenderer = (scriptUrl: string, cssUrl: string) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -45,7 +131,7 @@ const useWebComponentsRenderer = (scriptUrl: string, cssUrl: string) => {
         checkIfBothLoaded();
       };
       
-      script.onerror = (asd) => {
+      script.onerror = () => {
         setError(`Failed to load script: ${scriptUrl}`);
         setLoading(false);
       };

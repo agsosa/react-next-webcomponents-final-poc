@@ -1,3 +1,4 @@
+import RemoteShipmentDetails from "@/components/RemoteShipmentDetails";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -417,13 +418,14 @@ export default function OrderDetail() {
             )}
 
             {activeTab === 'shipment' && (
-              <EmptyTabMessage>
-                <h3>Shipment Information</h3>
-                <p>
-                  La información de envío se cargará aquí mediante web components.<br />
-                  Esta funcionalidad se implementará próximamente.
-                </p>
-              </EmptyTabMessage>
+              <RemoteShipmentDetails />
+              // <EmptyTabMessage>
+              //   <h3>Shipment Information</h3>
+              //   <p>
+              //     La información de envío se cargará aquí mediante web components.<br />
+              //     Esta funcionalidad se implementará próximamente.
+              //   </p>
+              // </EmptyTabMessage>
             )}
           </TabContent>
         </TabsContainer>
