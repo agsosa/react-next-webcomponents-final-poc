@@ -1,6 +1,6 @@
 # Microfrontends PoC – React to Web Components with Next.js and Vite
 
-This is a proof of concept demonstrating how to implement Microfrontends using @r2wc/react-to-web-component to expose React components as Web Components, built with Vite and exported/consumed inside Next.js applications.
+This is a early-stage proof of concept demonstrating how to implement Microfrontends using @r2wc/react-to-web-component to expose React components as Web Components, built with Vite and exported/consumed inside Next.js applications.
 
 ## 🔗 Deployed Apps
 
@@ -26,7 +26,7 @@ Communication between host (shell) and Web Components should be with events or g
 
 Needs better error/loading handling, better Flash of Undefined Custom Elements (FOUCE) and layout shift handling.
 
-Needs better optimizations
+Needs better bundle optimizations (peer dependencies, etc)
 
 Still needs some testing for context, styled-components themes and other libraries.
 
