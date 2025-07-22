@@ -1,3 +1,4 @@
+import { FC, useEffect, useLayoutEffect } from "react";
 import styled from "styled-components";
 
 const HeaderContainer = styled.header`
@@ -19,7 +20,7 @@ const Logo = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  
+
   h1 {
     font-size: 1.3rem;
     margin: 0;
@@ -46,24 +47,39 @@ const UserInfo = styled.div`
   gap: 15px;
   color: #666;
   font-size: 0.9rem;
-  
+
   .user-name {
     color: #333;
     font-weight: 500;
   }
-  
+
   .logout {
     color: #007bff;
     text-decoration: none;
     cursor: pointer;
-    
+
     &:hover {
       text-decoration: underline;
     }
   }
 `;
 
-export default function Header() {
+interface IHeader {
+  onLoad?: () => void;
+  label?: string;
+  onClick?: () => void;
+  onPepe?: () => void;
+}
+
+export default function Header({ onLoad, onPepe, label, onClick }: IHeader)  {
+  useLayoutEffect(() => {
+    console.log("Header component mounted", onLoad);
+    if (onLoad) onLoad();
+    if (onPepe) onPepe();
+  }, [onLoad]);
+
+
+
   return (
     <HeaderContainer>
       <HeaderContent>
@@ -71,13 +87,15 @@ export default function Header() {
           <LogoIcon>⚡</LogoIcon>
           <h1>Backoffice</h1>
         </Logo>
-        
+
         <UserInfo>
           <span className="user-name">Juan Pérez</span>
           <span>|</span>
-          <a href="#logout" className="logout">Cerrar Sesión</a>
+          <a href="#logout" className="logout">
+            Cerrar Sesión
+          </a>
         </UserInfo>
       </HeaderContent>
     </HeaderContainer>
   );
-}
+};

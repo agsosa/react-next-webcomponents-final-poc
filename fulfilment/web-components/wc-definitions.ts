@@ -13,6 +13,13 @@ const WebComponents = [
   {
     element: "backoffice-header",
     component: Header,
+    props: { 
+      label: "string",
+      onPepe: "function"
+    },
+    events: {
+      onLoad: { bubbles: true }
+    }
   },
   /*{
     element: "my-button",
@@ -43,11 +50,13 @@ function onConsumerAppLoadedScript() {
 
     for (const wc of WebComponents) {
       if (!customElements.get(wc.element)) {
+        console.log(wc)
         customElements.define(
           wc.element,
           r2wc(wc.component, {
             props: wc.props || {},
-            shadow: wc.shadow || undefined
+            events: wc.events || {},
+            shadow: wc.shadow || undefined,
           })
         );
         console.log(`${wc.element} component registered`);
