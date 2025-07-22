@@ -50,13 +50,12 @@ This repository implements a **micro-frontend architecture** using **web compone
 |-----|------|------|------------|
 | **OMS** | 3000 | Consumer | Order management with embedded components from the provider apps |
 | **Posventa** | 3001 | Provider | Customer service forms |
-| **Fulfilment** | 3002 | Provider | Shipment tracking and headers |
+| **Fulfilment** | 3002 | Provider | Shipment tracking and backoffice header |
 
-The provider apps can run independently and reuse the exported components as regular React components.
+**The provider apps are just Next.js apps that can run independently and reuse the exported components as regular React components.**
 
-### 🔧 Technology Stack
+### 🔧 Used technology Stack
 
-**Core Technologies:**
 - **Next.js 15.4.2** with Pages Router
 - **React 19.1.0**
 - **@r2wc/react-to-web-component** - React to Web Component conversion
@@ -64,12 +63,11 @@ The provider apps can run independently and reuse the exported components as reg
 - **styled-components**
 - **TypeScript**
 
-
 ### 🏗️ Web Components Implementation
 
 #### Provider Apps (Component Builders)
 
-Each provider app includes a wc-definitions.ts file to define web components using the react-to-web-components library. Vite bundles the code using this file as the entry point, and the bundled JS file is served from the Next.js /public/ folder for consumption by other apps.
+Each provider app includes a `wc-definitions.ts` file to define web components using the `react-to-web-component` library. Vite bundles the code using this file as the entry point, and the bundled JS file is served from the Next.js `/public/` folder for consumption by other apps.
 
 **Fulfilment Exports:**
 ```html
