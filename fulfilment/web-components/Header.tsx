@@ -67,18 +67,13 @@ const UserInfo = styled.div`
 interface IHeader {
   onLoad?: () => void;
   label?: string;
-  onClick?: () => void;
-  onPepe?: () => void;
 }
 
-export default function Header({ onLoad, onPepe, label, onClick }: IHeader)  {
+export default function Header({ onLoad }: IHeader) {
   useLayoutEffect(() => {
     console.log("Header component mounted", onLoad);
     if (onLoad) onLoad();
-    if (onPepe) onPepe();
   }, [onLoad]);
-
-
 
   return (
     <HeaderContainer>
@@ -98,4 +93,4 @@ export default function Header({ onLoad, onPepe, label, onClick }: IHeader)  {
       </HeaderContent>
     </HeaderContainer>
   );
-};
+}

@@ -8,12 +8,14 @@ const nextConfig: NextConfig = {
   publicRuntimeConfig: {
     fulfilmentUrl: process.env.NEXT_PUBLIC_FULFILMENT_URL,
   },
-    eslint: {
-    ignoreDuringBuilds: true
+  
+  // This is just a PoC, disabling eslint/ts for now
+  eslint: {
+    ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: true
-  }
+    ignoreBuildErrors: true,
+  },
 };
 
 export default nextConfig;

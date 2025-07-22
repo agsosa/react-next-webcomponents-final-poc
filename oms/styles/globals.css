@@ -15,11 +15,10 @@ a {
   text-decoration: none;
 }
 
-  body {
-    opacity: 0;
-  }
+/* body {
+  opacity: 0;
+}
 
-  body.ready {
-    opacity: 1;
-   
-  }
+body.ready {
+  opacity: 1;
+} */

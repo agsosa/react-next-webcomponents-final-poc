@@ -5,24 +5,25 @@ const nextConfig: NextConfig = {
   compiler: {
     styledComponents: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true
-  },
-  typescript: {
-    ignoreBuildErrors: true
-  },
   async headers() {
     return [
       {
-        source: '/web-components-vite/:path*',
+        source: "/web-components/:path*",
         headers: [
           {
-            key: 'Cache-Control',
-            value: 'public, max-age=300, stale-while-revalidate=86400',
+            key: "Cache-Control",
+            value: "public, max-age=300, stale-while-revalidate=86400",
           },
         ],
       },
     ];
+  },
+  // This is just a PoC, disabling eslint/ts for now
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
   },
 };
 

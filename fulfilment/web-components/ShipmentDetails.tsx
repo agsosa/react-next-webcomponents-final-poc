@@ -3,7 +3,8 @@ import styled from "styled-components";
 
 // Styled components (self-contained for web component)
 const ShipmentContainer = styled.div`
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", sans-serif;
   width: 100%;
 `;
 
@@ -28,24 +29,36 @@ const StatusBadge = styled.span<{ status: string }>`
   font-size: 14px;
   font-weight: 500;
   text-transform: uppercase;
-  background: ${props => {
+  background: ${(props) => {
     switch (props.status) {
-      case 'preparing': return '#fff3cd';
-      case 'packed': return '#d1ecf1';
-      case 'shipped': return '#d4edda';
-      case 'delivered': return '#d1e7dd';
-      case 'returned': return '#f8d7da';
-      default: return '#e9ecef';
+      case "preparing":
+        return "#fff3cd";
+      case "packed":
+        return "#d1ecf1";
+      case "shipped":
+        return "#d4edda";
+      case "delivered":
+        return "#d1e7dd";
+      case "returned":
+        return "#f8d7da";
+      default:
+        return "#e9ecef";
     }
   }};
-  color: ${props => {
+  color: ${(props) => {
     switch (props.status) {
-      case 'preparing': return '#856404';
-      case 'packed': return '#0c5460';
-      case 'shipped': return '#155724';
-      case 'delivered': return '#0f5132';
-      case 'returned': return '#721c24';
-      default: return '#495057';
+      case "preparing":
+        return "#856404";
+      case "packed":
+        return "#0c5460";
+      case "shipped":
+        return "#155724";
+      case "delivered":
+        return "#0f5132";
+      case "returned":
+        return "#721c24";
+      default:
+        return "#495057";
     }
   }};
 `;
@@ -56,13 +69,18 @@ const PriorityBadge = styled.span<{ priority: string }>`
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
-  background: ${props => {
+  background: ${(props) => {
     switch (props.priority) {
-      case 'urgent': return '#dc3545';
-      case 'high': return '#fd7e14';
-      case 'normal': return '#6c757d';
-      case 'low': return '#28a745';
-      default: return '#6c757d';
+      case "urgent":
+        return "#dc3545";
+      case "high":
+        return "#fd7e14";
+      case "normal":
+        return "#6c757d";
+      case "low":
+        return "#28a745";
+      default:
+        return "#6c757d";
     }
   }};
   color: white;
@@ -84,7 +102,7 @@ const InfoItem = styled.div`
     margin-bottom: 5px;
     text-transform: uppercase;
   }
-  
+
   p {
     color: #333;
     font-size: 16px;
@@ -115,21 +133,21 @@ const TimelineItem = styled.div<{ isActive: boolean }>`
   display: flex;
   align-items: center;
   margin-bottom: 15px;
-  
+
   &:before {
-    content: '';
+    content: "";
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: ${props => props.isActive ? '#28a745' : '#dee2e6'};
+    background: ${(props) => (props.isActive ? "#28a745" : "#dee2e6")};
     margin-right: 15px;
     flex-shrink: 0;
   }
 `;
 
 const TimelineContent = styled.div<{ isActive: boolean }>`
-  color: ${props => props.isActive ? '#333' : '#6c757d'};
-  font-weight: ${props => props.isActive ? '600' : 'normal'};
+  color: ${(props) => (props.isActive ? "#333" : "#6c757d")};
+  font-weight: ${(props) => (props.isActive ? "600" : "normal")};
 `;
 
 const LoadingState = styled.div`
@@ -149,8 +167,13 @@ const ErrorState = styled.div`
 `;
 
 // Types
-export type ShipmentStatus = 'preparing' | 'packed' | 'shipped' | 'delivered' | 'returned';
-export type ShipmentPriority = 'low' | 'normal' | 'high' | 'urgent';
+export type ShipmentStatus =
+  | "preparing"
+  | "packed"
+  | "shipped"
+  | "delivered"
+  | "returned";
+export type ShipmentPriority = "low" | "normal" | "high" | "urgent";
 
 export interface ShipmentDetail {
   id: string;
@@ -178,13 +201,13 @@ export interface ShipmentDetailsProps {
   shipmentId?: string;
   shipmentData?: string; // JSON string for web component
   apiUrl?: string;
-  
+
   // React component props
   shipment?: ShipmentDetail;
   onTrackingClick?: (trackingNumber: string, carrier: string) => void;
   onError?: (error: string) => void;
   onLoad?: (shipment: ShipmentDetail) => void;
-  
+
   // Display options
   showTimeline?: boolean;
   showTrackingSection?: boolean;
@@ -193,79 +216,100 @@ export interface ShipmentDetailsProps {
 
 // Mock data (could be replaced with API calls)
 const mockShipmentDetails: Record<string, ShipmentDetail> = {
-  'SHP-001': {
-    id: 'SHP-001',
-    orderId: 'ORD-001',
-    customer: 'John Smith',
-    email: 'john.smith@email.com',
-    destination: 'New York, NY',
-    fullAddress: '123 Main St, New York, NY 10001',
-    carrier: 'FedEx',
-    trackingNumber: '1234567890',
-    shipDate: '2024-01-15',
-    estimatedDelivery: '2024-01-17',
-    actualDelivery: '2024-01-17',
-    status: 'delivered',
-    priority: 'normal',
+  "SHP-001": {
+    id: "SHP-001",
+    orderId: "ORD-001",
+    customer: "John Smith",
+    email: "john.smith@email.com",
+    destination: "New York, NY",
+    fullAddress: "123 Main St, New York, NY 10001",
+    carrier: "FedEx",
+    trackingNumber: "1234567890",
+    shipDate: "2024-01-15",
+    estimatedDelivery: "2024-01-17",
+    actualDelivery: "2024-01-17",
+    status: "delivered",
+    priority: "normal",
     weight: 2.5,
     dimensions: '12" x 8" x 6"',
     items: 3,
-    packageType: 'Standard Box',
-    specialInstructions: 'Leave at front door'
+    packageType: "Standard Box",
+    specialInstructions: "Leave at front door",
   },
-  'SHP-002': {
-    id: 'SHP-002',
-    orderId: 'ORD-002',
-    customer: 'Sarah Johnson',
-    email: 'sarah.j@email.com',
-    destination: 'Los Angeles, CA',
-    fullAddress: '456 Oak Ave, Los Angeles, CA 90210',
-    carrier: 'UPS',
-    trackingNumber: '0987654321',
-    shipDate: '2024-01-16',
-    estimatedDelivery: '2024-01-19',
-    status: 'shipped',
-    priority: 'high',
+  "SHP-002": {
+    id: "SHP-002",
+    orderId: "ORD-002",
+    customer: "Sarah Johnson",
+    email: "sarah.j@email.com",
+    destination: "Los Angeles, CA",
+    fullAddress: "456 Oak Ave, Los Angeles, CA 90210",
+    carrier: "UPS",
+    trackingNumber: "0987654321",
+    shipDate: "2024-01-16",
+    estimatedDelivery: "2024-01-19",
+    status: "shipped",
+    priority: "high",
     weight: 1.8,
     dimensions: '10" x 6" x 4"',
     items: 2,
-    packageType: 'Padded Envelope'
+    packageType: "Padded Envelope",
   },
-  'SHP-003': {
-    id: 'SHP-003',
-    orderId: 'ORD-003',
-    customer: 'Mike Davis',
-    email: 'mike.davis@email.com',
-    destination: 'Chicago, IL',
-    fullAddress: '789 Pine St, Chicago, IL 60601',
-    carrier: 'DHL',
-    trackingNumber: '5555666777',
-    shipDate: '2024-01-17',
-    estimatedDelivery: '2024-01-20',
-    status: 'packed',
-    priority: 'urgent',
+  "SHP-003": {
+    id: "SHP-003",
+    orderId: "ORD-003",
+    customer: "Mike Davis",
+    email: "mike.davis@email.com",
+    destination: "Chicago, IL",
+    fullAddress: "789 Pine St, Chicago, IL 60601",
+    carrier: "DHL",
+    trackingNumber: "5555666777",
+    shipDate: "2024-01-17",
+    estimatedDelivery: "2024-01-20",
+    status: "packed",
+    priority: "urgent",
     weight: 0.5,
     dimensions: '8" x 4" x 2"',
     items: 1,
-    packageType: 'Small Package',
-    specialInstructions: 'Signature required'
-  }
+    packageType: "Small Package",
+    specialInstructions: "Signature required",
+  },
 };
 
 const getTimelineStatus = (status: ShipmentStatus) => {
   const timeline = [
-    { step: 'preparing', label: 'Order Preparing', description: 'Items being gathered and prepared' },
-    { step: 'packed', label: 'Package Packed', description: 'Items packed and ready for pickup' },
-    { step: 'shipped', label: 'Package Shipped', description: 'Package picked up by carrier' },
-    { step: 'delivered', label: 'Package Delivered', description: 'Package delivered to destination' }
+    {
+      step: "preparing",
+      label: "Order Preparing",
+      description: "Items being gathered and prepared",
+    },
+    {
+      step: "packed",
+      label: "Package Packed",
+      description: "Items packed and ready for pickup",
+    },
+    {
+      step: "shipped",
+      label: "Package Shipped",
+      description: "Package picked up by carrier",
+    },
+    {
+      step: "delivered",
+      label: "Package Delivered",
+      description: "Package delivered to destination",
+    },
   ];
 
-  const statusOrder: ShipmentStatus[] = ['preparing', 'packed', 'shipped', 'delivered'];
+  const statusOrder: ShipmentStatus[] = [
+    "preparing",
+    "packed",
+    "shipped",
+    "delivered",
+  ];
   const currentIndex = statusOrder.indexOf(status);
-  
+
   return timeline.map((item, index) => ({
     ...item,
-    isActive: index <= currentIndex
+    isActive: index <= currentIndex,
   }));
 };
 
@@ -279,9 +323,11 @@ export default function ShipmentDetails({
   onLoad,
   showTimeline = true,
   showTrackingSection = true,
-  compactMode = false
+  compactMode = false,
 }: ShipmentDetailsProps) {
-  const [shipment, setShipment] = useState<ShipmentDetail | null>(propShipment || null);
+  const [shipment, setShipment] = useState<ShipmentDetail | null>(
+    propShipment || null
+  );
   const [loading, setLoading] = useState(Boolean(shipmentId && !propShipment)); // Only loading if we need to fetch
   const [error, setError] = useState<string | null>(null);
 
@@ -318,8 +364,8 @@ export default function ShipmentDetails({
         if (apiUrl) {
           // If API URL provided, make actual API call
           fetch(`${apiUrl}/shipments/${shipmentId}`)
-            .then(response => {
-              if (!response.ok) throw new Error('Shipment not found');
+            .then((response) => {
+              if (!response.ok) throw new Error("Shipment not found");
               return response.json();
             })
             .then((data: ShipmentDetail) => {
@@ -327,7 +373,7 @@ export default function ShipmentDetails({
               setLoading(false);
               onLoad?.(data);
             })
-            .catch(err => {
+            .catch((err) => {
               const errorMsg = `Failed to load shipment: ${err.message}`;
               setError(errorMsg);
               setLoading(false);
@@ -388,7 +434,7 @@ export default function ShipmentDetails({
         </ShipmentContainer>
       );
     }
-    
+
     // If we have an ID but no shipment yet, show loading
     return (
       <ShipmentContainer>
@@ -404,14 +450,18 @@ export default function ShipmentDetails({
       <ShipmentHeader>
         <div>
           <ShipmentId>Shipment {shipment.id}</ShipmentId>
-          <div style={{marginTop: '5px', color: '#666', fontSize: compactMode ? '0.9rem' : '1rem'}}>
+          <div
+            style={{
+              marginTop: "5px",
+              color: "#666",
+              fontSize: compactMode ? "0.9rem" : "1rem",
+            }}
+          >
             Order {shipment.orderId}
           </div>
         </div>
         <div>
-          <StatusBadge status={shipment.status}>
-            {shipment.status}
-          </StatusBadge>
+          <StatusBadge status={shipment.status}>{shipment.status}</StatusBadge>
           <PriorityBadge priority={shipment.priority}>
             {shipment.priority}
           </PriorityBadge>
@@ -435,7 +485,7 @@ export default function ShipmentDetails({
           <h3>Est. Delivery</h3>
           <p>{shipment.estimatedDelivery}</p>
         </InfoItem>
-        
+
         {!compactMode && (
           <>
             <InfoItem>
@@ -458,13 +508,13 @@ export default function ShipmentDetails({
         )}
       </InfoGrid>
 
-      <InfoItem style={{marginBottom: '20px'}}>
+      <InfoItem style={{ marginBottom: "20px" }}>
         <h3>Shipping Address</h3>
         <p>{shipment.fullAddress}</p>
       </InfoItem>
 
       {shipment.specialInstructions && (
-        <InfoItem style={{marginBottom: '20px'}}>
+        <InfoItem style={{ marginBottom: "20px" }}>
           <h3>Special Instructions</h3>
           <p>{shipment.specialInstructions}</p>
         </InfoItem>
@@ -472,17 +522,24 @@ export default function ShipmentDetails({
 
       {showTrackingSection && (
         <TrackingSection>
-          <h3 style={{margin: '0 0 10px 0', color: '#666', fontSize: '14px', textTransform: 'uppercase'}}>
+          <h3
+            style={{
+              margin: "0 0 10px 0",
+              color: "#666",
+              fontSize: "14px",
+              textTransform: "uppercase",
+            }}
+          >
             Tracking Information
           </h3>
-          <div style={{marginBottom: '10px'}}>
+          <div style={{ marginBottom: "10px" }}>
             <strong>Carrier:</strong> {shipment.carrier}
           </div>
-          <div style={{marginBottom: '15px'}}>
+          <div style={{ marginBottom: "15px" }}>
             <strong>Tracking Number:</strong>
           </div>
-          <TrackingNumber 
-            style={{ cursor: onTrackingClick ? 'pointer' : 'default' }}
+          <TrackingNumber
+            style={{ cursor: onTrackingClick ? "pointer" : "default" }}
             onClick={handleTrackingClick}
           >
             {shipment.trackingNumber}
@@ -492,14 +549,16 @@ export default function ShipmentDetails({
 
       {showTimeline && (
         <Timeline>
-          <h3 style={{marginBottom: '20px', color: '#333'}}>Shipment Progress</h3>
+          <h3 style={{ marginBottom: "20px", color: "#333" }}>
+            Shipment Progress
+          </h3>
           {timeline.map((item, index) => (
             <TimelineItem key={index} isActive={item.isActive}>
               <TimelineContent isActive={item.isActive}>
-                <div style={{fontWeight: item.isActive ? '600' : 'normal'}}>
+                <div style={{ fontWeight: item.isActive ? "600" : "normal" }}>
                   {item.label}
                 </div>
-                <div style={{fontSize: '14px', color: '#6c757d'}}>
+                <div style={{ fontSize: "14px", color: "#6c757d" }}>
                   {item.description}
                 </div>
               </TimelineContent>

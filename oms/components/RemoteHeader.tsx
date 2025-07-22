@@ -1,6 +1,5 @@
-import getConfig from "next/config";
 import dynamic from "next/dynamic";
-import useEventListener from "./useEventListener";
+import useEventListener from "../hooks/useEventListener";
 
 declare global {
   namespace JSX {
@@ -13,25 +12,15 @@ declare global {
   }
 }
 
-function Server_RemoteHeader() {
-  const {
-    publicRuntimeConfig: { fulfilmentUrl },
-  } = getConfig();
-
+function RemoteHeader() {
   useEventListener("backoffice-header", "onLoad", (event) => {
-    console.log("onLoad event triggered", event);
-    document.body.classList.add("ready");
+    console.log("onLoad event triggered on shell app", event);
+    // document.body.classList.add("ready");
   });
 
-  return (
-    <>
-      <backoffice-header onClick={() => console.log("pepe")} />
-    </>
-  );
+  return <backoffice-header onClick={() => console.log("pepe")} />;
 }
 
-//export default Server_RemoteHeader;
-
-export default dynamic(() => Promise.resolve(Server_RemoteHeader), {
+export default dynamic(() => Promise.resolve(RemoteHeader), {
   ssr: false,
 });
