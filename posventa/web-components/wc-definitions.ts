@@ -19,7 +19,7 @@ const WebComponents = [
       errorRedirect: "string",
       
       // Initial values (JSON string)
-      initialValues: "string",
+      initialValues: "json",
       
       // Validation options
       requireOrderNumber: "boolean",

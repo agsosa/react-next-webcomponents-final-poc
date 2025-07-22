@@ -93,7 +93,7 @@ function RemoteCustomerServiceForm({
       submit-url={submitUrl}
       success-redirect={successRedirect}
       error-redirect={errorRedirect}
-      initial-values={initialValues ? JSON.stringify(initialValues) : undefined}
+      initial-values={JSON.stringify(initialValues || {})}
       require-order-number={requireOrderNumber ? "true" : "false"}
       allowed-priorities={JSON.stringify(allowedPriorities)}
     />
