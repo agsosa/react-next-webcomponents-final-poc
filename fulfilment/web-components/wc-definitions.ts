@@ -10,6 +10,7 @@ const WebComponents = [
     component: Header,
     props: {
       label: "string",
+      onLoad: 'function'
     },
     events: {
       onLoad: { bubbles: true },

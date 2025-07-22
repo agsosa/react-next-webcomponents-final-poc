@@ -18,7 +18,7 @@ function RemoteHeader() {
     // document.body.classList.add("ready");
   });
 
-  return <backoffice-header onClick={() => console.log("pepe")} />;
+  return <backoffice-header />;
 }
 
 export default dynamic(() => Promise.resolve(RemoteHeader), {

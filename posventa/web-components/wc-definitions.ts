@@ -1,35 +1,39 @@
-import Header from "./Header";
-import ShipmentDetails from "./ShipmentDetails";
-
+import CustomerServiceForm from "./CustomerServiceForm";
 import r2wc from "@r2wc/react-to-web-component";
 
 // Web components configuration
 const WebComponents = [
   {
-    element: "backoffice-header",
-    component: Header,
+    element: "customer-service-form",
+    component: CustomerServiceForm,
     props: {
-      label: "string",
+      // Display props
+      title: "string",
+      subtitle: "string", 
+      issueName: "string",
+      showHeader: "boolean",
+      
+      // Configuration props
+      submitUrl: "string",
+      successRedirect: "string",
+      errorRedirect: "string",
+      
+      // Initial values (JSON string)
+      initialValues: "string",
+      
+      // Validation options
+      requireOrderNumber: "boolean",
+      allowedPriorities: "string", // JSON array string
+      
+      // Event handlers
+      onSubmit: "function",
+      onSuccess: "function", 
+      onError: "function"
     },
     events: {
-      onLoad: { bubbles: true },
-    },
-  },
-  {
-    element: "shipment-details",
-    component: ShipmentDetails,
-    props: {
-      shipmentId: "string",
-      shipmentData: "string",
-      apiUrl: "string",
-      showTimeline: "boolean",
-      showTrackingSection: "boolean",
-      compactMode: "boolean",
-    },
-    events: {
-      onLoad: { bubbles: true },
-      onError: { bubbles: true },
-      onTrackingClick: { bubbles: true },
+      onSubmit: { bubbles: true },
+      onSuccess: { bubbles: true },
+      onError: { bubbles: true }
     },
   },
 ];
