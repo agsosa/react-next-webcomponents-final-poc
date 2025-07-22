@@ -7,8 +7,9 @@ const nextConfig: NextConfig = {
   },
   publicRuntimeConfig: {
     fulfilmentUrl: process.env.NEXT_PUBLIC_FULFILMENT_URL,
+    posventaUrl: process.env.NEXT_PUBLIC_POSVENTA_URL,
   },
-  
+
   // This is just a PoC, disabling eslint/ts for now
   eslint: {
     ignoreDuringBuilds: true,
