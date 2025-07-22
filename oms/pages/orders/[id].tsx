@@ -1,4 +1,5 @@
 import RemoteShipmentDetails from "@/components/RemoteShipmentDetails";
+import RemoteCustomerServiceForm from "@/components/RemoteCustomerServiceForm";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -213,25 +214,6 @@ const PostventaSectionTitle = styled.h3`
   }
 `;
 
-const PostventaPlaceholder = styled.div`
-  background: white;
-  border: 1px dashed #ccc;
-  border-radius: 4px;
-  padding: 30px;
-  text-align: center;
-  color: #666;
-  
-  h4 {
-    margin-bottom: 8px;
-    color: #333;
-    font-size: 1rem;
-  }
-  
-  p {
-    font-size: 0.85rem;
-    line-height: 1.4;
-  }
-`;
 
 type OrderItem = {
   id: string;
@@ -375,13 +357,20 @@ export default function OrderDetail() {
                   <PostventaSectionTitle>
                     Customer Support
                   </PostventaSectionTitle>
-                  <PostventaPlaceholder>
-                    <h4>Formulario de Soporte Posventa</h4>
-                    <p>
-                      Aquí se integrará el formulario de consultas de posventa<br />
-                      mediante web components para gestionar incidencias del cliente.
-                    </p>
-                  </PostventaPlaceholder>
+                  <RemoteCustomerServiceForm
+                    title="Soporte al Cliente"
+                    subtitle={`Cliente: ${order.customer} | Pedido: ${order.id} | Operador: Juan Pérez`}
+                    initialValues={{
+                      fullName: order.customer,
+                      email: order.email,
+                      orderNumber: order.id
+                    }}
+                    requireOrderNumber={true}
+                    allowedPriorities={['medium', 'high']}
+                    onSubmit={(data) => console.log('Form submitted:', data)}
+                    onSuccess={(data) => console.log('Form success:', data)}
+                    onError={(error) => console.error('Form error:', error)}
+                  />
                 </PostventaSection>
 
                 <ItemsSection>

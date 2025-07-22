@@ -44,9 +44,15 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          {/* Fulfilment Web Components */}
           <Script
             src={fulfilmentUrl + "/web-components/web-components.umd.js"}
             type="module"
+          />
+          {/* Posventa Web Components */}
+          <Script
+            src="http://localhost:3001/web-components/web-components.umd.js"
+            strategy="beforeInteractive"
           />
         </Head>
         <body>
