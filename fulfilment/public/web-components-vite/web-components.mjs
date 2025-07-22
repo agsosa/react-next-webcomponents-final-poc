@@ -1662,9 +1662,9 @@ const Ju = jt.div`
 `, N0 = jt.div`
   padding: 20px;
   text-align: center;
-  color: #dc3545;
-  background: #f8d7da;
-  border: 1px solid #f5c6cb;
+  color: #666;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
   border-radius: 8px;
 `, tm = {
   "SHP-001": {

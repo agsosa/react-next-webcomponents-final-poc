@@ -419,13 +419,6 @@ export default function OrderDetail() {
 
             {activeTab === 'shipment' && (
               <RemoteShipmentDetails />
-              // <EmptyTabMessage>
-              //   <h3>Shipment Information</h3>
-              //   <p>
-              //     La información de envío se cargará aquí mediante web components.<br />
-              //     Esta funcionalidad se implementará próximamente.
-              //   </p>
-              // </EmptyTabMessage>
             )}
           </TabContent>
         </TabsContainer>
