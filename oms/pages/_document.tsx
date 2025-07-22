@@ -54,7 +54,7 @@ export default class MyDocument extends Document {
           <link rel="preconnect" href={fulfilmentUrl} crossOrigin="anonymous" /> */}
                     {/* <script defer async src={fulfilmentUrl + "/web-components-vite/web-components.umd.js"} /> */}
       <Script
-        src={fulfilmentUrl + "/web-components-vite/web-components.umd.js"}
+        src={fulfilmentUrl + "/web-components-vite/web-components.mjs"}
         type="module"
       />
         </Head>
