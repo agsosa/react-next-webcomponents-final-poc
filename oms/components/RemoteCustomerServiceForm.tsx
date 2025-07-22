@@ -1,28 +1,6 @@
 import dynamic from "next/dynamic";
 import useEventListener from "../hooks/useEventListener";
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      "customer-service-form": React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement> & {
-          title?: string;
-          subtitle?: string;
-          "issue-name"?: string;
-          "show-header"?: string;
-          "submit-url"?: string;
-          "success-redirect"?: string;
-          "error-redirect"?: string;
-          "initial-values"?: string;
-          "require-order-number"?: string;
-          "allowed-priorities"?: string;
-        },
-        HTMLElement
-      >;
-    }
-  }
-}
-
 interface RemoteCustomerServiceFormProps {
   title?: string;
   subtitle?: string;

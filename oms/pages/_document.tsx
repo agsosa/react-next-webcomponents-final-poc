@@ -38,7 +38,7 @@ export default class MyDocument extends Document {
 
   render() {
     const {
-      publicRuntimeConfig: { fulfilmentUrl },
+      publicRuntimeConfig: { fulfilmentUrl, posventaUrl },
     } = getConfig();
 
     return (
@@ -49,9 +49,10 @@ export default class MyDocument extends Document {
             src={fulfilmentUrl + "/web-components/web-components.umd.js"}
             type="module"
           />
+          
           {/* Posventa Web Components */}
           <Script
-            src="http://localhost:3001/web-components/web-components.umd.js"
+            src={posventaUrl + "/web-components/web-components.umd.js"}
             strategy="beforeInteractive"
           />
         </Head>
