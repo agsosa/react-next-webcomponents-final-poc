@@ -285,7 +285,7 @@ export default function OrderDetail() {
         <Head>
           <title>OMS - Order Not Found</title>
         </Head>
-        <BackLink onClick={() => window.location.href = '/'}>← Back to Orders</BackLink>
+        <BackLink onClick={() => router.push('/')}>← Back to Orders</BackLink>
         <Header>Order Not Found</Header>
         <p>The requested order could not be found.</p>
       </Container>
@@ -301,7 +301,7 @@ export default function OrderDetail() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container>
-        <BackLink onClick={() => window.location.href = '/'}>← Back to Orders</BackLink>
+        <BackLink onClick={() => router.push('/')}>← Back to Orders</BackLink>
         
         <TabsContainer>
           <TabsList>

@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -126,6 +127,8 @@ const mockOrders: Order[] = [
 ];
 
 export default function OrdersList() {
+  const router = useRouter()
+
   return (
     <>
       <Head>
@@ -149,7 +152,7 @@ export default function OrdersList() {
           </thead>
           <tbody>
             {mockOrders.map(order => (
-              <TableRow key={order.id} onClick={() => window.location.href = `/orders/${order.id}`}>
+              <TableRow key={order.id} onClick={() => router.push(`/orders/${order.id}`)}>
                 <TableCell>{order.id}</TableCell>
                 <TableCell>{order.customer}</TableCell>
                 <TableCell>{order.date}</TableCell>
