@@ -1,4 +1,4 @@
-import { FC, useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import styled from "styled-components";
 
 const HeaderContainer = styled.header`
@@ -66,10 +66,11 @@ const UserInfo = styled.div`
 
 interface IHeader {
   onLoad?: () => void;
-  label?: string;
+  username: string;
+  appTitle: string
 }
 
-export default function Header({ onLoad }: IHeader) {
+export default function Header({ appTitle, username, onLoad }: IHeader) {
   useLayoutEffect(() => {
     console.log("Header component mounted", onLoad);
     if (onLoad) onLoad();
@@ -80,11 +81,11 @@ export default function Header({ onLoad }: IHeader) {
       <HeaderContent>
         <Logo>
           <LogoIcon>⚡</LogoIcon>
-          <h1>Backoffice</h1>
+          <h1>{appTitle}</h1>
         </Logo>
 
         <UserInfo>
-          <span className="user-name">Juan Pérez</span>
+          <span className="user-name">{username}</span>
           <span>|</span>
           <a href="#logout" className="logout">
             Cerrar Sesión

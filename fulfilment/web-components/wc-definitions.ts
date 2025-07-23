@@ -9,7 +9,8 @@ const WebComponents = [
     element: "backoffice-header",
     component: Header,
     props: {
-      label: "string",
+      appTitle: "string",
+      username: "string",
       onLoad: 'function'
     },
     events: {
@@ -41,7 +42,6 @@ function onConsumerAppLoadedScript() {
 
     for (const wc of WebComponents) {
       if (!customElements.get(wc.element)) {
-        console.log(wc);
         customElements.define(
           wc.element,
           r2wc(wc.component, {

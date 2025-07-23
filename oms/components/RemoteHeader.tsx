@@ -20,13 +20,12 @@ function RemoteHeader() {
 
   useEventListener("backoffice-header", "onLoad", (event) => {
     console.log("onLoad event triggered on shell app", event);
-    // document.body.classList.add("ready");
     setLoaded(true);
   });
 
   return (
     <div>
-      <backoffice-header />
+      <backoffice-header appTitle="OMS" username="Juan OMS" />
     </div>
   );
 }

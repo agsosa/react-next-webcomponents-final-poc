@@ -200,7 +200,7 @@ export default function ShipmentsList() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageContainer>
-        <Header />
+        <Header appTitle="Fulfilment" username="Pepito FF" />
         <MainContent>
           <Container>
             <PageHeader>Gestión de Envíos</PageHeader>
