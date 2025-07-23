@@ -7,17 +7,41 @@ const useEventListener = (
   options?: boolean | AddEventListenerOptions
 ) => {
   useEffect(() => {
-    const element = document.querySelector(elementName);
-    if (!element) return;
+    let element = document.querySelector(elementName);
+    const name = event.replace(/^on/, "").toLowerCase();
 
-    const name = event.replace(/^on/, "").toLowerCase(); // https://github.com/bitovi/react-to-web-component/blob/b1372bfd7bc67fe49920db840f1ed9cf736b2724/packages/core/src/core.ts#L117
+    const attachListener = (el: Element) => {
+      el.addEventListener(name, handler, options);
+    };
 
-    element.addEventListener(name, handler, options);
+    if (element) {
+      attachListener(element);
+    }
+
+    // Create an observer to watch for the element if it doesn't exist yet
+    const observer = new MutationObserver(() => {
+      const newElement = document.querySelector(elementName);
+      if (newElement && newElement !== element) {
+        element = newElement;
+        attachListener(element);
+        observer.disconnect();
+      }
+    });
+
+    if (!element) {
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    }
 
     return () => {
-      element.removeEventListener(name, handler, options);
+      if (element) {
+        element.removeEventListener(name, handler, options);
+      }
+      observer.disconnect();
     };
-  }, [elementName, event, handler]);
+  }, [elementName, event, handler, options]);
 };
 
 export default useEventListener;
