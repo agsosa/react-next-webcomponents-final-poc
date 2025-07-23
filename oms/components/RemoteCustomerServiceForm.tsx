@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import useEventListener from "../hooks/useEventListener";
+import Skeleton from "./Skeleton";
 
 interface RemoteCustomerServiceFormProps {
   title?: string;
@@ -14,11 +15,11 @@ interface RemoteCustomerServiceFormProps {
     email?: string;
     phone?: string;
     orderNumber?: string;
-    priority?: 'low' | 'medium' | 'high';
+    priority?: "low" | "medium" | "high";
     message?: string;
   };
   requireOrderNumber?: boolean;
-  allowedPriorities?: Array<'low' | 'medium' | 'high'>;
+  allowedPriorities?: Array<"low" | "medium" | "high">;
   onSubmit?: (data: any) => void;
   onSuccess?: (data: any, response?: any) => void;
   onError?: (error: string, data?: any) => void;
@@ -34,12 +35,11 @@ function RemoteCustomerServiceForm({
   errorRedirect,
   initialValues,
   requireOrderNumber = false,
-  allowedPriorities = ['low', 'medium', 'high'],
+  allowedPriorities = ["low", "medium", "high"],
   onSubmit,
   onSuccess,
-  onError
+  onError,
 }: RemoteCustomerServiceFormProps) {
-  
   // Set up event listeners for form events
   useEventListener("customer-service-form", "onSubmit", (event) => {
     console.log("Customer service form submitted", event);
@@ -80,6 +80,7 @@ function RemoteCustomerServiceForm({
 
 export default dynamic(() => Promise.resolve(RemoteCustomerServiceForm), {
   ssr: false,
+  loading: () => <Skeleton style={{ width: "100%", height: "879px" }} />,
 });
 
 export type { RemoteCustomerServiceFormProps };
