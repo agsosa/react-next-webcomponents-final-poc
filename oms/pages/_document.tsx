@@ -47,6 +47,7 @@ export default class MyDocument extends Document {
           {/* Fulfilment Web Components */}
           <Script
             src={fulfilmentUrl + "/web-components/web-components.umd.js"}
+            strategy="beforeInteractive"
             type="module"
           />
           
@@ -54,6 +55,7 @@ export default class MyDocument extends Document {
           <Script
             src={posventaUrl + "/web-components/web-components.umd.js"}
             strategy="beforeInteractive"
+            type="module"
           />
         </Head>
         <body>
