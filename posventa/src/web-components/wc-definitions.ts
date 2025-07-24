@@ -1,11 +1,8 @@
 import CustomerServiceForm from "./CustomerServiceForm";
 import r2wc from "@r2wc/react-to-web-component";
 
-// Web components configuration
-const WebComponents = [
-  {
-    element: "customer-service-form",
-    component: CustomerServiceForm,
+const webComponents = {
+  "customer-service-form": r2wc(CustomerServiceForm, {
     props: {
       // Display props
       title: "string",
@@ -35,25 +32,16 @@ const WebComponents = [
       onSuccess: { bubbles: true },
       onError: { bubbles: true }
     },
-  },
-];
+  }),
+};
 
+// Register our web components on the consumer app
 function onConsumerAppLoadedScript() {
   try {
-    // Register our web components on the consumer app
-
-    for (const wc of WebComponents) {
-      if (!customElements.get(wc.element)) {
-        console.log(wc);
-        customElements.define(
-          wc.element,
-          r2wc(wc.component, {
-            props: wc.props || {},
-            events: wc.events || {},
-            shadow: wc.shadow || undefined,
-          })
-        );
-        console.log(`${wc.element} component registered`);
+    for (const [name, component] of Object.entries(webComponents)) {
+      if (!customElements.get(name)) {
+        customElements.define(name, component);
+        console.log(`${name} component registered`);
       }
     }
   } catch (error) {

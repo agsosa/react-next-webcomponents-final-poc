@@ -3,23 +3,12 @@ import ShipmentDetails from "./ShipmentDetails";
 
 import r2wc from "@r2wc/react-to-web-component";
 
-// Web components configuration
-const WebComponents = [
-  {
-    element: "backoffice-header",
-    component: Header,
-    props: {
-      appTitle: "string",
-      username: "string",
-      onLoad: 'function'
-    },
-    events: {
-      onLoad: { bubbles: true },
-    },
-  },
-  {
-    element: "shipment-details",
-    component: ShipmentDetails,
+const webComponents = {
+  "backoffice-header": r2wc(Header, {
+    props: { appTitle: "string", username: "string" },
+    events: { onLoad: { bubbles: true } },
+  }),
+  "shipment-details": r2wc(ShipmentDetails, {
     props: {
       shipmentId: "string",
       shipmentData: "string",
@@ -33,24 +22,16 @@ const WebComponents = [
       onError: { bubbles: true },
       onTrackingClick: { bubbles: true },
     },
-  },
-];
+  }),
+};
 
+// Register our web components on the consumer app
 function onConsumerAppLoadedScript() {
   try {
-    // Register our web components on the consumer app
-
-    for (const wc of WebComponents) {
-      if (!customElements.get(wc.element)) {
-        customElements.define(
-          wc.element,
-          r2wc(wc.component, {
-            props: wc.props || {},
-            events: wc.events || {},
-            shadow: wc.shadow || undefined,
-          })
-        );
-        console.log(`${wc.element} component registered`);
+    for (const [name, component] of Object.entries(webComponents)) {
+      if (!customElements.get(name)) {
+        customElements.define(name, component);
+        console.log(`${name} component registered`);
       }
     }
   } catch (error) {

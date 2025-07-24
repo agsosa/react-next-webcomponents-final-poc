@@ -21,7 +21,6 @@ export default defineConfig(({ mode }) => {
     {}
   );
 
-  //const srcDir = resolve(__dirname, "src");
   const entryFile = resolve("src/web-components/wc-definitions.ts");
 
   return {
