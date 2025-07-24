@@ -135,7 +135,7 @@ export default function ShipmentDetails({
       return (
         <ShipmentContainer>
           <ErrorState>
-            <h3>No Data xd 2 3</h3>
+            <h3>No Data</h3>
             <p>No shipment data provided</p>
           </ErrorState>
         </ShipmentContainer>
