@@ -4,15 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a proof-of-concept simulating 3 separate Next.js applications from different teams, each deployed to different URLs. The POC demonstrates how teams can share components while maintaining independent deployments.
+This is a proof-of-concept simulating 4 separate Next.js applications from different teams, each deployed to different URLs. The POC demonstrates how teams can share components while maintaining independent deployments and React version compatibility.
 
 ## Architecture
 
 ### Multi-App Structure
-- **3 Independent Next.js Apps**: Each represents a different team/domain
-- **Separate Deployments**: Each app will be deployed to different URLs
+- **4 Independent Next.js Apps**: 3 production apps + 1 React 18 compatibility test app
+- **Separate Deployments**: Each app runs on different ports and can be deployed independently
 - **Web Components Integration**: Apps can share components via web components using @r2wc/react-to-web-component
 - **Cross-Origin Component Sharing**: Components built in one app can be consumed remotely by others
+- **React Version Compatibility**: Testing both React 19 and React 18 web component integration
 
 ### Technology Stack (All Apps)
 - Next.js with Pages Router
@@ -26,52 +27,74 @@ This is a proof-of-concept simulating 3 separate Next.js applications from diffe
 
 ### Applications
 
-#### 1. OMS App (Order Management System)
+#### 1. OMS App (Order Management System) - React 19
 - Port: 3000
+- React 19.1.0 + Next.js 15.4.2
+- **Consumer App**: Integrates web components from both Fulfilment and Posventa
 - Order management backoffice with order listing and detail pages
-- Features tabbed order detail view with Order Details and Shipment Info tabs
-- Includes placeholder for Posventa web component integration in order details
-- Uses basic backoffice header component
+- Features tabbed order detail view with Order Details, Shipment Info, and Customer Support tabs
+- Complete web component integration in order details:
+  - Uses RemoteHeader from Fulfilment
+  - Uses RemoteShipmentDetails from Fulfilment in Shipment Info tab
+  - Uses RemoteCustomerServiceForm from Posventa in Customer Support tab
+- Modern React 19 web component support with native prop handling
 
-#### 2. Posventa App (Post-Sales Service)
+#### 2. OMS React 18 (Compatibility Test)
+- Port: 3004
+- React 18.3.1 + Next.js 14.2.18
+- **Consumer App Clone**: Identical functionality to main OMS but with React 18
+- Tests backward compatibility of web components with older React versions
+- Same web component integrations as main OMS app
+- Validates that the web component architecture works across React versions
+
+#### 3. Posventa App (Post-Sales Service)
 - Port: 3001
+- **Provider App**: Exports customer service web components
 - Multi-step customer service form system
 - Flow: Issues List → Sub-issues → Contact Form → Results
 - Built with react-hook-form for form validation
 - Compact, list-based interface design
 - Includes 8 common customer service scenarios in Spanish
+- **Web Components Provider**: Exports `customer-service-form` component with complete form functionality
 
-#### 3. Fulfilment App
+#### 4. Fulfilment App
 - Port: 3002
+- **Provider App**: Exports backoffice and shipment web components
 - Shipment management system with listing and detail pages
 - Features shipment tracking, progress timeline, and logistics data
-- Uses basic backoffice header component
 - Priority-based shipment management interface
-- **Web Components Provider**: Exports reusable components (Header) as web components for other apps
+- **Web Components Provider**: Exports reusable components:
+  - `backoffice-header` - Basic backoffice header component
+  - `shipment-details` - Complete shipment tracking with timeline and logistics data
 
 ## Development Commands
 
-### OMS App (Port 3000) - Consumer App
+### OMS App (Port 3000) - Consumer App - React 19
 ```bash
-cd oms && npm run dev              # Solo Next.js (consume web components remotos)
+cd oms && npm run dev              # Next.js only (consumes remote web components)
+```
+
+### OMS React 18 (Port 3004) - Consumer App - React 18 Compatibility Test
+```bash
+cd oms-react18 && npm run dev      # Next.js only (identical to OMS but React 18)
 ```
 
 ### Posventa App (Port 3001) - Provider App
 ```bash
-cd posventa && npm run dev         # Next.js + Web Components build en paralelo
+cd posventa && npm run dev         # Next.js + Web Components build in parallel
 # OR separately:
-cd posventa && npm run dev:next    # Solo Next.js development server
-cd posventa && npm run dev:wc      # Solo web components build en watch mode
-cd posventa && npm run build:wc    # Build web components una vez
+cd posventa && npm run dev:next    # Next.js development server only
+cd posventa && npm run dev:wc      # Web components build in watch mode only
+cd posventa && npm run build:wc    # Build web components once
 ```
 
 ### Fulfilment App (Port 3002) - Provider App  
 ```bash
-cd fulfilment && npm run dev       # Next.js + Web Components build en paralelo
+cd fulfilment && npm run dev       # Next.js + Web Components build in parallel
 # OR separately:
-cd fulfilment && npm run dev:next  # Solo Next.js development server
-cd fulfilment && npm run dev:wc    # Solo web components build en watch mode
-cd fulfilment && npm run build:wc  # Build web components una vez
+cd fulfilment && npm run dev:next  # Next.js development server only
+cd fulfilment && npm run dev:wc    # Web components build in watch mode only
+cd fulfilment && npm run build:wc  # Build web components once
 ```
 
 ### Other Commands (for any app)
@@ -90,17 +113,17 @@ npm start        # Start production server
 │   │   ├── pages/
 │   │   │   ├── index.tsx         # Orders list page
 │   │   │   ├── _app.tsx          # App wrapper
-│   │   │   ├── _document.tsx     # Carga scripts de web components remotos
+│   │   │   ├── _document.tsx     # Loads remote web component scripts
 │   │   │   └── orders/[id].tsx   # Order detail with integrated web components
 │   │   ├── components/           # Web components wrappers
-│   │   │   ├── RemoteHeader.tsx  # Wrapper para backoffice-header (fulfilment)
-│   │   │   ├── RemoteShipmentDetails.tsx # Wrapper para shipment-details (fulfilment)
-│   │   │   ├── RemoteCustomerServiceForm.tsx # Wrapper para customer-service-form (posventa)
+│   │   │   ├── RemoteHeader.tsx  # Wrapper for backoffice-header (fulfilment)
+│   │   │   ├── RemoteShipmentDetails.tsx # Wrapper for shipment-details (fulfilment)
+│   │   │   ├── RemoteCustomerServiceForm.tsx # Wrapper for customer-service-form (posventa)
 │   │   │   └── Skeleton.tsx      # Loading skeleton component
 │   │   ├── hooks/
-│   │   │   └── useEventListener.ts # Custom hook con CustomEvent typing
+│   │   │   └── useEventListener.ts # Custom hook with CustomEvent typing
 │   │   ├── types/
-│   │   │   └── web-components.d.ts # Type declarations con React 19 module augmentation
+│   │   │   └── web-components.d.ts # Type declarations with React 19 module augmentation
 │   │   └── styles/               # Global styles
 │   ├── next.config.ts            # Next.js 15.4.2 config with src support
 │   └── package.json              # React 19.1.0 dependencies
@@ -121,16 +144,16 @@ npm start        # Start production server
 │   │   ├── styles/               # Global styles
 │   │   └── web-components/       # Web components source code
 │   │       ├── CustomerServiceForm/ # Formulario modularizado
-│   │       │   ├── CustomerServiceForm.tsx # Componente principal
-│   │       │   ├── CustomerServiceForm.types.ts # Tipos e interfaces
-│   │       │   ├── CustomerServiceForm.constants.ts # Constantes (nombres de issues)
+│   │       │   ├── CustomerServiceForm.tsx # Main component
+│   │       │   ├── CustomerServiceForm.types.ts # Types and interfaces
+│   │       │   ├── CustomerServiceForm.constants.ts # Constants (issue names)
 │   │       │   ├── CustomerServiceForm.styles.ts # Styled components
-│   │       │   └── index.ts      # Exportaciones del módulo
-│   │       └── wc-definitions.ts # Registro y definición de web components
+│   │       │   └── index.ts      # Module exports
+│   │       └── wc-definitions.ts # Web component registration and definitions
 │   ├── public/web-components/    # Built web components (generated)
-│   │   ├── web-components.umd.js # Bundle UMD para consumo remoto
-│   │   └── web-components.css    # Estilos para web components
-│   ├── vite.wc.config.ts         # Configuración Vite para web components
+│   │   ├── web-components.umd.js # UMD bundle for remote consumption
+│   │   └── web-components.css    # Styles for web components
+│   ├── vite.wc.config.ts         # Vite configuration for web components
 │   ├── next.config.ts            # Next.js config with CORS headers
 │   └── package.json              # Dependencies + build scripts
 ├── fulfilment/                   # Fulfilment Next.js app (port 3002) - PROVIDER
@@ -140,22 +163,22 @@ npm start        # Start production server
 │   │   ├── styles/               # Global styles
 │   │   └── web-components/       # Web components source code
 │   │       ├── Header/           # Header modularizado
-│   │       │   ├── Header.tsx    # Componente principal
-│   │       │   ├── Header.types.ts # Tipos e interfaces
+│   │       │   ├── Header.tsx    # Main component
+│   │       │   ├── Header.types.ts # Types and interfaces
 │   │       │   ├── Header.styles.ts # Styled components
-│   │       │   └── index.ts      # Exportaciones del módulo
+│   │       │   └── index.ts      # Module exports
 │   │       ├── ShipmentDetails/  # ShipmentDetails modularizado
-│   │       │   ├── ShipmentDetails.tsx # Componente principal
-│   │       │   ├── ShipmentDetails.types.ts # Tipos e interfaces
-│   │       │   ├── ShipmentDetails.mockData.ts # Datos de prueba
-│   │       │   ├── ShipmentDetails.utils.ts # Funciones utilitarias
+│   │       │   ├── ShipmentDetails.tsx # Main component
+│   │       │   ├── ShipmentDetails.types.ts # Types and interfaces
+│   │       │   ├── ShipmentDetails.mockData.ts # Test data
+│   │       │   ├── ShipmentDetails.utils.ts # Utility functions
 │   │       │   ├── ShipmentDetails.styles.ts # Styled components
-│   │       │   └── index.ts      # Exportaciones del módulo
-│   │       └── wc-definitions.ts # Registro y definición de web components
+│   │       │   └── index.ts      # Module exports
+│   │       └── wc-definitions.ts # Web component registration and definitions
 │   ├── public/web-components/    # Built web components (generated)
-│   │   ├── web-components.umd.js # Bundle UMD para consumo remoto
-│   │   └── web-components.css    # Estilos para web components
-│   ├── vite.wc.config.ts         # Configuración Vite para web components
+│   │   ├── web-components.umd.js # UMD bundle for remote consumption
+│   │   └── web-components.css    # Styles for web components
+│   ├── vite.wc.config.ts         # Vite configuration for web components
 │   ├── next.config.ts            # Next.js config with CORS headers
 │   └── package.json              # Dependencies + build scripts
 └── shared/                       # Shared components/utilities (if needed)
@@ -164,61 +187,62 @@ npm start        # Start production server
 ## Web Components Integration
 
 ### Current Implementation
-- **Falfilment → OMS**: OMS consumes `backoffice-header` y `shipment-details` web components desde Fulfilment 
-- **Posventa → OMS**: OMS consumes `customer-service-form` web component desde Posventa
-- **Cross-Origin Loading**: Web components se cargan via Script tags desde:
+- **Fulfilment → OMS**: OMS consumes `backoffice-header` and `shipment-details` web components from Fulfilment 
+- **Posventa → OMS**: OMS consumes `customer-service-form` web component from Posventa
+- **Cross-Origin Loading**: Web components are loaded via Script tags from:
   - Fulfilment: `http://localhost:3002/web-components/web-components.umd.js`  
   - Posventa: `http://localhost:3001/web-components/web-components.umd.js`
-- **Component Registration**: Web components se registran automáticamente usando @r2wc/react-to-web-component
+- **Component Registration**: Web components are automatically registered using @r2wc/react-to-web-component
 
 ### Provider Apps (Fulfilment & Posventa)
-**Fulfilment expone:**
-- `<backoffice-header />` - Header básico para backoffice
-- `<shipment-details />` - Detalles de envío con tracking
+**Fulfilment exports:**
+- `<backoffice-header />` - Basic backoffice header
+- `<shipment-details />` - Shipment details with tracking
 
-**Posventa expone:**
-- `<customer-service-form />` - Formulario completo de atención al cliente con react-hook-form
+**Posventa exports:**
+- `<customer-service-form />` - Complete customer service form with react-hook-form
 
 ### Consumer App (OMS)
-**OMS consume web components via:**
-- `RemoteHeader` - Wrapper para `<backoffice-header />`
-- `RemoteShipmentDetails` - Wrapper para `<shipment-details />`  
-- `RemoteCustomerServiceForm` - Wrapper tipado para `<customer-service-form />`
+**OMS consumes web components via:**
+- `RemoteHeader` - Wrapper for `<backoffice-header />`
+- `RemoteShipmentDetails` - Wrapper for `<shipment-details />`  
+- `RemoteCustomerServiceForm` - Typed wrapper for `<customer-service-form />`
 
-### Integración Completa Implementada
-- **OMS Order Details**: Integra RemoteCustomerServiceForm de Posventa en sección "Customer Support"
-- **OMS Shipment Tab**: Integra RemoteShipmentDetails de Fulfilment en pestaña "Shipment Info"
-- **Event Handling**: Sistema completo de eventos customizados entre apps
-- **Props Tipadas**: Interfaces TypeScript para pasar propiedades complejas
+### Complete Integration Implemented
+- **OMS Header**: Integrates RemoteHeader (backoffice-header) from Fulfilment across all OMS pages
+- **OMS Order Details**: Integrates RemoteCustomerServiceForm from Posventa in "Customer Support" section
+- **OMS Shipment Tab**: Integrates RemoteShipmentDetails from Fulfilment in "Shipment Info" tab
+- **Event Handling**: Complete custom event system between apps
+- **Typed Props**: TypeScript interfaces for passing complex properties
 
 ### Technical Implementation Details
-- **Build Process**: Vite construye componentes React como bundles UMD
-- **Output Directory**: Web components se generan en `/public/web-components/`
-- **Environment Variables**: Variables VITE_ y NEXT_PUBLIC_ se inyectan en build time
-- **Style Isolation**: Cada web component incluye sus propios estilos CSS
-- **DOM Registration**: Componentes se registran solo si no existen previamente
-- **React 19 Support**: Props complejas (objetos, arrays, funciones) funcionan nativamente
-- **React 18 Compatibility**: Testing app en puerto 3004 con React 18.3.1 y Next.js 14.2.18
+- **Build Process**: Vite builds React components as UMD bundles
+- **Output Directory**: Web components are generated in `/public/web-components/`
+- **Environment Variables**: VITE_ and NEXT_PUBLIC_ variables are injected at build time
+- **Style Isolation**: Each web component includes its own CSS styles
+- **DOM Registration**: Components register only if not already defined previously
+- **React 19 Support**: Complex props (objects, arrays, functions) work natively
+- **React 18 Compatibility**: Testing app on port 3004 with React 18.3.1 and Next.js 14.2.18
 - **TypeScript Integration**: 
-  - React 19: Module augmentation con `declare module "react"`
-  - React 18: Global declarations con fallback para compatibilidad
-  - CustomEvent typing para eventos de web components
-- **Modular Architecture**: Cada web component está modularizado con archivos separados:
-  - `Component.tsx` - Componente principal
-  - `Component.types.ts` - Tipos e interfaces TypeScript
+  - React 19: Module augmentation with `declare module "react"`
+  - React 18: Global declarations with fallback for compatibility
+  - CustomEvent typing for web component events
+- **Modular Architecture**: Each web component is modularized with separate files:
+  - `Component.tsx` - Main component
+  - `Component.types.ts` - TypeScript types and interfaces
   - `Component.styles.ts` - Styled components CSS-in-JS
-  - `Component.utils.ts` - Funciones utilitarias (cuando aplique)
-  - `Component.constants.ts` / `Component.mockData.ts` - Datos estáticos
-  - `index.ts` - Exportaciones del módulo
+  - `Component.utils.ts` - Utility functions (when applicable)
+  - `Component.constants.ts` / `Component.mockData.ts` - Static data
+  - `index.ts` - Module exports
 
 ## Design System
 
-- **Minimal, Clean Interface**: Sin gradientes, esquema simple gris/blanco
-- **Compact Lists**: Espaciado reducido para uso eficiente del espacio
-- **Professional Backoffice Style**: Diseño funcional enfocado en negocio
-- **Consistent Tab System**: Sistema de pestañas usado en OMS para organizar contenido
-- **Form Validation**: Integración con react-hook-form para validación robusta
-- **Event-Driven Architecture**: Comunicación via custom events entre micro-frontends
+- **Minimal, Clean Interface**: No gradients, simple gray/white color scheme
+- **Compact Lists**: Reduced spacing for efficient space usage
+- **Professional Backoffice Style**: Business-focused, functional design
+- **Consistent Tab System**: Tab system used in OMS to organize content
+- **Form Validation**: Integration with react-hook-form for robust validation
+- **Event-Driven Architecture**: Communication via custom events between micro-frontends
 
 ## Important Considerations
 
