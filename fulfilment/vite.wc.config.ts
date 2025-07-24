@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => {
   );
 
   //const srcDir = resolve(__dirname, "src");
-  const entryFile = resolve("web-components/wc-definitions.ts");
+  const entryFile = resolve("src/web-components/wc-definitions.ts");
 
   return {
     plugins: [react(), typescript()],
@@ -51,7 +51,7 @@ export default defineConfig(({ mode }) => {
     },
     resolve: {
       alias: {
-        "@": "./*", // Se podria generar automaticamente sacando la info de tsconfig.json
+        "@": "./src/*", // Se podria generar automaticamente sacando la info de tsconfig.json
 
         // Polyfills opcionales, pero ayuda a evitar problemas con imports de Next.js
         // El de getconfig podria permitirnos usar variables de entorno de la app shell desde el web component

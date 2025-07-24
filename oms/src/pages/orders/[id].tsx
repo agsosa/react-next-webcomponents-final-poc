@@ -1,5 +1,5 @@
-import RemoteShipmentDetails from "@/components/RemoteShipmentDetails";
-import RemoteCustomerServiceForm from "@/components/RemoteCustomerServiceForm";
+import RemoteShipmentDetails from "../../components/RemoteShipmentDetails";
+import RemoteCustomerServiceForm from "../../components/RemoteCustomerServiceForm";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";

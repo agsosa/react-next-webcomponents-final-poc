@@ -79,7 +79,7 @@ export default function ShipmentDetail() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageContainer>
-        <Header />
+        <Header appTitle="Fulfilment" username="Pepito FF" />
         <MainContent>
           <Container>
             <BackLink onClick={() => window.location.href = '/'}>← Back to Shipments</BackLink>

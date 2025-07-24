@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => {
   );
 
   //const srcDir = resolve(__dirname, "src");
-  const entryFile = resolve("web-components/wc-definitions.ts");
+  const entryFile = resolve("src/web-components/wc-definitions.ts");
 
   return {
     plugins: [react(), typescript()],
