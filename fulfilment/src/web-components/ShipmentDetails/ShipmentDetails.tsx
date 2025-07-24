@@ -31,6 +31,7 @@ export default function ShipmentDetails({
   showTrackingSection = true,
   compactMode = false,
 }: ShipmentDetailsProps) {
+  console.log("RECEIVED shipmentId from CONSUMER", shipmentId)
   const [shipment, setShipment] = useState<ShipmentDetail | null>(
     propShipment || null
   );
@@ -134,7 +135,7 @@ export default function ShipmentDetails({
       return (
         <ShipmentContainer>
           <ErrorState>
-            <h3>No Data</h3>
+            <h3>No Data xd 2 3</h3>
             <p>No shipment data provided</p>
           </ErrorState>
         </ShipmentContainer>

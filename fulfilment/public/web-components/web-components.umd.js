@@ -68,22 +68,22 @@
       text-decoration: underline;
     }
   }
-`;function E1({appTitle:i,username:r,onLoad:o}){return ne.useLayoutEffect(()=>{console.log("Header component mounted",o),o&&o()},[o]),N.jsx(g1,{children:N.jsxs(p1,{children:[N.jsxs(S1,{children:[N.jsx(b1,{children:"⚡"}),N.jsx("h1",{children:i})]}),N.jsxs(A1,{children:[N.jsx("span",{className:"user-name",children:r}),N.jsx("span",{children:"|"}),N.jsx("a",{href:"#logout",className:"logout",children:"Cerrar Sesión"})]})]})})}const tu=Ut.div`
+`;function E1({appTitle:i,username:r,onLoad:o}){return ne.useLayoutEffect(()=>{console.log("Header component mounted",o),o&&o()},[o]),N.jsx(g1,{children:N.jsxs(p1,{children:[N.jsxs(S1,{children:[N.jsx(b1,{children:"⚡"}),N.jsx("h1",{children:i})]}),N.jsxs(A1,{children:[N.jsx("span",{className:"user-name",children:r}),N.jsx("span",{children:"|"}),N.jsx("a",{href:"#logout",className:"logout",children:"Cerrar Sesión"})]})]})})}const T1={"SHP-001":{id:"SHP-001",orderId:"ORD-001",customer:"John Smith",email:"john.smith@email.com",destination:"New York, NY",fullAddress:"123 Main St, New York, NY 10001",carrier:"FedEx",trackingNumber:"1234567890",shipDate:"2024-01-15",estimatedDelivery:"2024-01-17",actualDelivery:"2024-01-17",status:"delivered",priority:"normal",weight:2.5,dimensions:'12" x 8" x 6"',items:3,packageType:"Standard Box",specialInstructions:"Leave at front door"},"SHP-002":{id:"SHP-002",orderId:"ORD-002",customer:"Sarah Johnson",email:"sarah.j@email.com",destination:"Los Angeles, CA",fullAddress:"456 Oak Ave, Los Angeles, CA 90210",carrier:"UPS",trackingNumber:"0987654321",shipDate:"2024-01-16",estimatedDelivery:"2024-01-19",status:"shipped",priority:"high",weight:1.8,dimensions:'10" x 6" x 4"',items:2,packageType:"Padded Envelope"},"SHP-003":{id:"SHP-003",orderId:"ORD-003",customer:"Mike Davis",email:"mike.davis@email.com",destination:"Chicago, IL",fullAddress:"789 Pine St, Chicago, IL 60601",carrier:"DHL",trackingNumber:"5555666777",shipDate:"2024-01-17",estimatedDelivery:"2024-01-20",status:"packed",priority:"urgent",weight:.5,dimensions:'8" x 4" x 2"',items:1,packageType:"Small Package",specialInstructions:"Signature required"}},z1=i=>{const r=[{step:"preparing",label:"Order Preparing",description:"Items being gathered and prepared"},{step:"packed",label:"Package Packed",description:"Items packed and ready for pickup"},{step:"shipped",label:"Package Shipped",description:"Package picked up by carrier"},{step:"delivered",label:"Package Delivered",description:"Package delivered to destination"}],s=["preparing","packed","shipped","delivered"].indexOf(i);return r.map((b,z)=>Object.assign(Object.assign({},b),{isActive:z<=s}))},tu=Ut.div`
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", sans-serif;
   width: 100%;
-`,T1=Ut.div`
+`,O1=Ut.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
   padding-bottom: 20px;
   border-bottom: 1px solid #dee2e6;
-`,z1=Ut.h2`
+`,_1=Ut.h2`
   color: #333;
   margin: 0;
   font-size: 1.5rem;
-`,O1=Ut.span`
+`,D1=Ut.span`
   padding: 8px 16px;
   border-radius: 20px;
   font-size: 14px;
@@ -91,7 +91,7 @@
   text-transform: uppercase;
   background: ${i=>{switch(i.status){case"preparing":return"#fff3cd";case"packed":return"#d1ecf1";case"shipped":return"#d4edda";case"delivered":return"#d1e7dd";case"returned":return"#f8d7da";default:return"#e9ecef"}}};
   color: ${i=>{switch(i.status){case"preparing":return"#856404";case"packed":return"#0c5460";case"shipped":return"#155724";case"delivered":return"#0f5132";case"returned":return"#721c24";default:return"#495057"}}};
-`,_1=Ut.span`
+`,M1=Ut.span`
   padding: 6px 12px;
   border-radius: 12px;
   font-size: 12px;
@@ -100,7 +100,7 @@
   background: ${i=>{switch(i.priority){case"urgent":return"#dc3545";case"high":return"#fd7e14";case"normal":return"#6c757d";case"low":return"#28a745";default:return"#6c757d"}}};
   color: white;
   margin-left: 10px;
-`,D1=Ut.div`
+`,R1=Ut.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
@@ -119,20 +119,20 @@
     font-size: 16px;
     margin: 0;
   }
-`,M1=Ut.div`
+`,x1=Ut.div`
   background: #f8f9fa;
   border-radius: 6px;
   padding: 20px;
   margin-bottom: 20px;
-`,R1=Ut.div`
+`,U1=Ut.div`
   font-size: 18px;
   font-weight: 600;
   color: #333;
   font-family: monospace;
   letter-spacing: 1px;
-`,x1=Ut.div`
+`,N1=Ut.div`
   margin-top: 30px;
-`,U1=Ut.div`
+`,H1=Ut.div`
   display: flex;
   align-items: center;
   margin-bottom: 15px;
@@ -146,7 +146,7 @@
     margin-right: 15px;
     flex-shrink: 0;
   }
-`,N1=Ut.div`
+`,j1=Ut.div`
   color: ${i=>i.isActive?"#333":"#6c757d"};
   font-weight: ${i=>i.isActive?"600":"normal"};
 `,rs=Ut.div`
@@ -161,7 +161,7 @@
   background: #f8f9fa;
   border: 1px solid #dee2e6;
   border-radius: 8px;
-`,H1={"SHP-001":{id:"SHP-001",orderId:"ORD-001",customer:"John Smith",email:"john.smith@email.com",destination:"New York, NY",fullAddress:"123 Main St, New York, NY 10001",carrier:"FedEx",trackingNumber:"1234567890",shipDate:"2024-01-15",estimatedDelivery:"2024-01-17",actualDelivery:"2024-01-17",status:"delivered",priority:"normal",weight:2.5,dimensions:'12" x 8" x 6"',items:3,packageType:"Standard Box",specialInstructions:"Leave at front door"},"SHP-002":{id:"SHP-002",orderId:"ORD-002",customer:"Sarah Johnson",email:"sarah.j@email.com",destination:"Los Angeles, CA",fullAddress:"456 Oak Ave, Los Angeles, CA 90210",carrier:"UPS",trackingNumber:"0987654321",shipDate:"2024-01-16",estimatedDelivery:"2024-01-19",status:"shipped",priority:"high",weight:1.8,dimensions:'10" x 6" x 4"',items:2,packageType:"Padded Envelope"},"SHP-003":{id:"SHP-003",orderId:"ORD-003",customer:"Mike Davis",email:"mike.davis@email.com",destination:"Chicago, IL",fullAddress:"789 Pine St, Chicago, IL 60601",carrier:"DHL",trackingNumber:"5555666777",shipDate:"2024-01-17",estimatedDelivery:"2024-01-20",status:"packed",priority:"urgent",weight:.5,dimensions:'8" x 4" x 2"',items:1,packageType:"Small Package",specialInstructions:"Signature required"}},j1=i=>{const r=[{step:"preparing",label:"Order Preparing",description:"Items being gathered and prepared"},{step:"packed",label:"Package Packed",description:"Items packed and ready for pickup"},{step:"shipped",label:"Package Shipped",description:"Package picked up by carrier"},{step:"delivered",label:"Package Delivered",description:"Package delivered to destination"}],s=["preparing","packed","shipped","delivered"].indexOf(i);return r.map((b,z)=>Object.assign(Object.assign({},b),{isActive:z<=s}))};function q1({shipmentId:i,shipmentData:r,apiUrl:o,shipment:s,onTrackingClick:b,onError:z,onLoad:x,showTimeline:G=!0,showTrackingSection:R=!0,compactMode:A=!1}){const[_,C]=ne.useState(s||null),[X,q]=ne.useState(!!(i&&!s)),[Q,I]=ne.useState(null);ne.useEffect(()=>{if(s){C(s),x?.(s);return}if(r)try{const Y=JSON.parse(r);C(Y),x?.(Y);return}catch{const V="Invalid shipment data format";I(V),z?.(V);return}i&&!s&&(q(!0),I(null),setTimeout(()=>{if(o)fetch(`${o}/shipments/${i}`).then(Y=>{if(!Y.ok)throw new Error("Shipment not found");return Y.json()}).then(Y=>{C(Y),q(!1),x?.(Y)}).catch(Y=>{const V=`Failed to load shipment: ${Y.message}`;I(V),q(!1),z?.(V)});else{const Y=H1[i];if(Y)C(Y),q(!1),x?.(Y);else{const V=`Shipment ${i} not found`;I(V),q(!1),z?.(V)}}},100))},[i,r,s,o,x,z]);const tt=()=>{_&&b&&b(_.trackingNumber,_.carrier)};if(X)return N.jsx(tu,{children:N.jsx(rs,{children:"Loading shipment details..."})});if(Q)return N.jsx(tu,{children:N.jsxs(ss,{children:[N.jsx("h3",{children:"Error"}),N.jsx("p",{children:Q})]})});if(!_&&!X)return!i&&!r&&!s?N.jsx(tu,{children:N.jsxs(ss,{children:[N.jsx("h3",{children:"No Data"}),N.jsx("p",{children:"No shipment data provided"})]})}):N.jsx(tu,{children:N.jsx(rs,{children:"Loading shipment details..."})});const lt=j1(_.status);return N.jsxs(tu,{children:[N.jsxs(T1,{children:[N.jsxs("div",{children:[N.jsxs(z1,{children:["Shipment ",_.id]}),N.jsxs("div",{style:{marginTop:"5px",color:"#666",fontSize:A?"0.9rem":"1rem"},children:["Order ",_.orderId]})]}),N.jsxs("div",{children:[N.jsx(O1,{status:_.status,children:_.status}),N.jsx(_1,{priority:_.priority,children:_.priority})]})]}),N.jsxs(D1,{children:[N.jsxs(Nl,{children:[N.jsx("h3",{children:"Customer"}),N.jsx("p",{children:_.customer})]}),N.jsxs(Nl,{children:[N.jsx("h3",{children:"Email"}),N.jsx("p",{children:_.email})]}),N.jsxs(Nl,{children:[N.jsx("h3",{children:"Ship Date"}),N.jsx("p",{children:_.shipDate})]}),N.jsxs(Nl,{children:[N.jsx("h3",{children:"Est. Delivery"}),N.jsx("p",{children:_.estimatedDelivery})]}),!A&&N.jsxs(N.Fragment,{children:[N.jsxs(Nl,{children:[N.jsx("h3",{children:"Weight"}),N.jsxs("p",{children:[_.weight," lbs"]})]}),N.jsxs(Nl,{children:[N.jsx("h3",{children:"Dimensions"}),N.jsx("p",{children:_.dimensions})]}),N.jsxs(Nl,{children:[N.jsx("h3",{children:"Package Type"}),N.jsx("p",{children:_.packageType})]}),N.jsxs(Nl,{children:[N.jsx("h3",{children:"Items Count"}),N.jsx("p",{children:_.items})]})]})]}),N.jsxs(Nl,{style:{marginBottom:"20px"},children:[N.jsx("h3",{children:"Shipping Address"}),N.jsx("p",{children:_.fullAddress})]}),_.specialInstructions&&N.jsxs(Nl,{style:{marginBottom:"20px"},children:[N.jsx("h3",{children:"Special Instructions"}),N.jsx("p",{children:_.specialInstructions})]}),R&&N.jsxs(M1,{children:[N.jsx("h3",{style:{margin:"0 0 10px 0",color:"#666",fontSize:"14px",textTransform:"uppercase"},children:"Tracking Information"}),N.jsxs("div",{style:{marginBottom:"10px"},children:[N.jsx("strong",{children:"Carrier:"})," ",_.carrier]}),N.jsx("div",{style:{marginBottom:"15px"},children:N.jsx("strong",{children:"Tracking Number:"})}),N.jsx(R1,{style:{cursor:b?"pointer":"default"},onClick:tt,children:_.trackingNumber})]}),G&&N.jsxs(x1,{children:[N.jsx("h3",{style:{marginBottom:"20px",color:"#333"},children:"Shipment Progress"}),lt.map((Y,V)=>N.jsx(U1,{isActive:Y.isActive,children:N.jsxs(N1,{isActive:Y.isActive,children:[N.jsx("div",{style:{fontWeight:Y.isActive?"600":"normal"},children:Y.label}),N.jsx("div",{style:{fontSize:"14px",color:"#6c757d"},children:Y.description})]})},V))]})]})}var tc={exports:{}},lu={},lc={exports:{}},ec={};/**
+`;function q1({shipmentId:i,shipmentData:r,apiUrl:o,shipment:s,onTrackingClick:b,onError:z,onLoad:x,showTimeline:G=!0,showTrackingSection:R=!0,compactMode:A=!1}){console.log("RECEIVED shipmentId from CONSUMER",i);const[_,C]=ne.useState(s||null),[X,q]=ne.useState(!!(i&&!s)),[Q,I]=ne.useState(null);ne.useEffect(()=>{if(s){C(s),x?.(s);return}if(r)try{const Y=JSON.parse(r);C(Y),x?.(Y);return}catch{const V="Invalid shipment data format";I(V),z?.(V);return}i&&!s&&(q(!0),I(null),setTimeout(()=>{if(o)fetch(`${o}/shipments/${i}`).then(Y=>{if(!Y.ok)throw new Error("Shipment not found");return Y.json()}).then(Y=>{C(Y),q(!1),x?.(Y)}).catch(Y=>{const V=`Failed to load shipment: ${Y.message}`;I(V),q(!1),z?.(V)});else{const Y=T1[i];if(Y)C(Y),q(!1),x?.(Y);else{const V=`Shipment ${i} not found`;I(V),q(!1),z?.(V)}}},100))},[i,r,s,o,x,z]);const tt=()=>{_&&b&&b(_.trackingNumber,_.carrier)};if(X)return N.jsx(tu,{children:N.jsx(rs,{children:"Loading shipment details..."})});if(Q)return N.jsx(tu,{children:N.jsxs(ss,{children:[N.jsx("h3",{children:"Error"}),N.jsx("p",{children:Q})]})});if(!_&&!X)return!i&&!r&&!s?N.jsx(tu,{children:N.jsxs(ss,{children:[N.jsx("h3",{children:"No Data xd 2 3"}),N.jsx("p",{children:"No shipment data provided"})]})}):N.jsx(tu,{children:N.jsx(rs,{children:"Loading shipment details..."})});const lt=z1(_.status);return N.jsxs(tu,{children:[N.jsxs(O1,{children:[N.jsxs("div",{children:[N.jsxs(_1,{children:["Shipment ",_.id]}),N.jsxs("div",{style:{marginTop:"5px",color:"#666",fontSize:A?"0.9rem":"1rem"},children:["Order ",_.orderId]})]}),N.jsxs("div",{children:[N.jsx(D1,{status:_.status,children:_.status}),N.jsx(M1,{priority:_.priority,children:_.priority})]})]}),N.jsxs(R1,{children:[N.jsxs(Nl,{children:[N.jsx("h3",{children:"Customer"}),N.jsx("p",{children:_.customer})]}),N.jsxs(Nl,{children:[N.jsx("h3",{children:"Email"}),N.jsx("p",{children:_.email})]}),N.jsxs(Nl,{children:[N.jsx("h3",{children:"Ship Date"}),N.jsx("p",{children:_.shipDate})]}),N.jsxs(Nl,{children:[N.jsx("h3",{children:"Est. Delivery"}),N.jsx("p",{children:_.estimatedDelivery})]}),!A&&N.jsxs(N.Fragment,{children:[N.jsxs(Nl,{children:[N.jsx("h3",{children:"Weight"}),N.jsxs("p",{children:[_.weight," lbs"]})]}),N.jsxs(Nl,{children:[N.jsx("h3",{children:"Dimensions"}),N.jsx("p",{children:_.dimensions})]}),N.jsxs(Nl,{children:[N.jsx("h3",{children:"Package Type"}),N.jsx("p",{children:_.packageType})]}),N.jsxs(Nl,{children:[N.jsx("h3",{children:"Items Count"}),N.jsx("p",{children:_.items})]})]})]}),N.jsxs(Nl,{style:{marginBottom:"20px"},children:[N.jsx("h3",{children:"Shipping Address"}),N.jsx("p",{children:_.fullAddress})]}),_.specialInstructions&&N.jsxs(Nl,{style:{marginBottom:"20px"},children:[N.jsx("h3",{children:"Special Instructions"}),N.jsx("p",{children:_.specialInstructions})]}),R&&N.jsxs(x1,{children:[N.jsx("h3",{style:{margin:"0 0 10px 0",color:"#666",fontSize:"14px",textTransform:"uppercase"},children:"Tracking Information"}),N.jsxs("div",{style:{marginBottom:"10px"},children:[N.jsx("strong",{children:"Carrier:"})," ",_.carrier]}),N.jsx("div",{style:{marginBottom:"15px"},children:N.jsx("strong",{children:"Tracking Number:"})}),N.jsx(U1,{style:{cursor:b?"pointer":"default"},onClick:tt,children:_.trackingNumber})]}),G&&N.jsxs(N1,{children:[N.jsx("h3",{style:{marginBottom:"20px",color:"#333"},children:"Shipment Progress"}),lt.map((Y,V)=>N.jsx(H1,{isActive:Y.isActive,children:N.jsxs(j1,{isActive:Y.isActive,children:[N.jsx("div",{style:{fontWeight:Y.isActive?"600":"normal"},children:Y.label}),N.jsx("div",{style:{fontSize:"14px",color:"#6c757d"},children:Y.description})]})},V))]})]})}var tc={exports:{}},lu={},lc={exports:{}},ec={};/**
  * @license React
  * scheduler.production.js
  *

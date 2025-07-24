@@ -1,5 +1,4 @@
-// React 19 web components type definitions
-declare module "react" {
+declare global {
   namespace JSX {
     interface IntrinsicElements {
       "backoffice-header": React.DetailedHTMLProps<
@@ -39,15 +38,6 @@ declare module "react" {
         },
         HTMLElement
       >;
-    }
-  }
-}
-
-// Global fallback for any unlisted web components
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      [elemName: string]: any;
     }
   }
 }
