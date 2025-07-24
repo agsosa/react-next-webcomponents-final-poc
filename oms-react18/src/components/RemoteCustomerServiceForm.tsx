@@ -2,6 +2,15 @@ import dynamic from "next/dynamic";
 import useEventListener from "../hooks/useEventListener";
 import Skeleton from "./Skeleton";
 
+type FormData = {
+  fullName?: string;
+  email?: string;
+  phone?: string;
+  orderNumber?: string;
+  priority?: "low" | "medium" | "high";
+  message?: string;
+};
+
 interface RemoteCustomerServiceFormProps {
   title?: string;
   subtitle?: string;
@@ -10,19 +19,18 @@ interface RemoteCustomerServiceFormProps {
   submitUrl?: string;
   successRedirect?: string;
   errorRedirect?: string;
-  initialValues?: {
-    fullName?: string;
-    email?: string;
-    phone?: string;
-    orderNumber?: string;
-    priority?: "low" | "medium" | "high";
-    message?: string;
-  };
+  initialValues?: FormData;
   requireOrderNumber?: boolean;
   allowedPriorities?: Array<"low" | "medium" | "high">;
   onSubmit?: (data: any) => void;
   onSuccess?: (data: any, response?: any) => void;
   onError?: (error: string, data?: any) => void;
+}
+
+enum Event {
+  OnSubmit = "onSubmit",
+  OnSuccess = "onSuccess",
+  OnError = "onError",
 }
 
 function RemoteCustomerServiceForm({
@@ -40,27 +48,41 @@ function RemoteCustomerServiceForm({
   onSuccess,
   onError,
 }: RemoteCustomerServiceFormProps) {
-  // Set up event listeners for form events
-  useEventListener("customer-service-form", "onSubmit", (event) => {
+  // Setup handlers for custom events
+  const handleSubmit = (event: CustomEvent) => {
     console.log("Customer service form submitted", event);
+
+    // Call the parent onSubmit handler if provided
     if (onSubmit) {
       onSubmit(event.detail);
     }
-  });
+  };
 
-  useEventListener("customer-service-form", "onSuccess", (event) => {
+  const handleSuccess = (
+    event: CustomEvent<{ data: FormData; response: object }>
+  ) => {
     console.log("Customer service form success", event);
+
+    // Call the parent onSuccess handler if provided
     if (onSuccess) {
       onSuccess(event.detail.data, event.detail.response);
     }
-  });
+  };
 
-  useEventListener("customer-service-form", "onError", (event) => {
+  const handleError = (event: CustomEvent<{ error: string; data?: FormData }>) => {
     console.log("Customer service form error", event);
+
+    // Call the parent onError handler if provided
     if (onError) {
       onError(event.detail.error, event.detail.data);
     }
-  });
+  };
+
+  // Set up event listeners for form events
+  const elementName = "customer-service-form"
+  useEventListener(elementName, Event.OnSubmit, handleSubmit);
+  useEventListener(elementName, Event.OnSuccess, handleSuccess);
+  useEventListener(elementName, Event.OnError, handleError);
 
   return (
     <customer-service-form

@@ -1,13 +1,7 @@
 import dynamic from "next/dynamic";
-import useEventListener from "../hooks/useEventListener";
 import Skeleton from "./Skeleton";
 
 function RemoteShipmentDetails() {
-  //   useEventListener("backoffice-header", "onLoad", (event) => {
-  //     console.log("onLoad event triggered", event);
-  //     document.body.classList.add("ready");
-  //   });
-
   return <shipment-details shipment-id="SHP-001" />;
 }
 
