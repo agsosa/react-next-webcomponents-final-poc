@@ -16,14 +16,26 @@ This is a proof-of-concept simulating 4 separate Next.js applications from diffe
 - **React Version Compatibility**: Testing both React 19 and React 18 web component integration
 
 ### Technology Stack (All Apps)
-- Next.js with Pages Router
-- TypeScript
-- styled-components for styling
+- **Next.js**: 15.4.2 with Pages Router (14.2.18 for oms-react18)
+- **React**: 19.1.0 (18.3.1 for oms-react18)
+- **TypeScript**: 5.x
+- **styled-components**: 6.1.19 for styling
+- **@r2wc/react-to-web-component**: 2.0.4
+- **Vite**: 7.0.5 for web components build
 
 ### Web Components Technology Stack
 - **@r2wc/react-to-web-component**: Converts React components to web components
 - **Vite**: Builds web components separately from Next.js apps
 - **UMD Format**: Web components are bundled as UMD modules for cross-origin consumption
+
+## React Version Compatibility Testing
+
+The repository includes two identical OMS applications to test web component compatibility across React versions:
+
+- **oms/** - React 19.1.0 with Next.js 15.4.2 (modern setup)
+- **oms-react18/** - React 18.3.1 with Next.js 14.2.18 (legacy compatibility)
+
+Both apps consume the same web components from Fulfilment and Posventa apps, validating that the web component architecture works seamlessly across React versions. This ensures backward compatibility for teams that haven't upgraded to React 19 yet.
 
 ### Applications
 
@@ -217,10 +229,12 @@ npm start        # Start production server
 
 ### Technical Implementation Details
 - **Build Process**: Vite builds React components as UMD bundles
-- **Output Directory**: Web components are generated in `/public/web-components/`
+- **Output Directory**: Web components are generated in `/public/web-components/` (with backup in `/public/web-components-vite/` for Posventa)
 - **Environment Variables**: VITE_ and NEXT_PUBLIC_ variables are injected at build time
 - **Style Isolation**: Each web component includes its own CSS styles
 - **DOM Registration**: Components register only if not already defined previously
+- **CORS Configuration**: Provider apps (Fulfilment & Posventa) include CORS headers for cross-origin web component consumption
+- **Cache Control**: Web component assets are served with appropriate cache headers
 - **React 19 Support**: Complex props (objects, arrays, functions) work natively
 - **React 18 Compatibility**: Testing app on port 3004 with React 18.3.1 and Next.js 14.2.18
 - **TypeScript Integration**: 
@@ -244,6 +258,18 @@ npm start        # Start production server
 - **Form Validation**: Integration with react-hook-form for robust validation
 - **Event-Driven Architecture**: Communication via custom events between micro-frontends
 
+## Shared Utilities and Hooks
+
+Both OMS applications include identical utilities for web component integration:
+
+- **useEventListener Hook**: Custom hook for handling web component custom events with proper TypeScript typing
+- **Skeleton Component**: Loading state component with customizable dimensions for web component placeholders
+- **Remote Component Wrappers**: TypeScript-typed wrapper components for each web component:
+  - `RemoteHeader` - Handles backoffice-header loading and events
+  - `RemoteShipmentDetails` - Wrapper for shipment tracking component
+  - `RemoteCustomerServiceForm` - Typed wrapper for customer service forms
+- **Type Definitions**: Comprehensive TypeScript definitions in `types/web-components.d.ts` for all web components and their props
+
 ## Important Considerations
 
 - Each app maintains its own dependencies and build process
@@ -251,6 +277,8 @@ npm start        # Start production server
 - Focus on demonstrating independent deployment while enabling component sharing
 - Linting is disabled for this POC to focus on functionality
 - React 19 provides native web component support for better micro-frontend architecture
+- **Complete Integration**: All web component integrations are fully implemented and functional
+- **Cross-Version Compatibility**: The same web components work seamlessly across React 18 and React 19
 - **Modular Component Structure**: All web components follow consistent modularization patterns for maintainability and scalability
 - **Naming Convention**: Files are prefixed with component name (e.g., `Header.types.ts`, `ShipmentDetails.utils.ts`) for better organization
 - **Index Exports**: Each component folder includes an `index.ts` for clean imports and API exposure
