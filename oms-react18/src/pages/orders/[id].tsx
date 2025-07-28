@@ -201,7 +201,7 @@ const PostventaSection = styled.div`
 `;
 
 const PostventaSectionTitle = styled.h3`
-  color: #333;
+  color: ${({ theme }) => theme.colors.primary};// #333;
   margin-bottom: 15px;
   font-size: 1.1rem;
   display: flex;
