@@ -6,6 +6,13 @@ export const HeaderContainer = styled.header`
   padding: 15px 0;
 `;
 
+export const TitleWithColor = styled.h1`
+    font-size: 1.3rem;
+    margin: 0;
+    font-weight: 500;
+  color: ${({ theme }) => theme.colors.primary};
+`
+
 export const HeaderContent = styled.div`
   max-width: 1200px;
   margin: 0 auto;
@@ -19,13 +26,6 @@ export const Logo = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-
-  h1 {
-    font-size: 1.3rem;
-    margin: 0;
-    font-weight: 500;
-    color: #333;
-  }
 `;
 
 export const LogoIcon = styled.div`

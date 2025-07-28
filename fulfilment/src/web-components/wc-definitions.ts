@@ -2,13 +2,14 @@ import Header from "./Header";
 import ShipmentDetails from "./ShipmentDetails";
 
 import r2wc from "@r2wc/react-to-web-component";
+import withProviders from "./withProviders";
 
 const webComponents = {
-  "backoffice-header": r2wc(Header, {
+  "backoffice-header": r2wc(withProviders(Header), {
     props: { appTitle: "string", username: "string" },
     events: { onLoad: { bubbles: true } },
   }),
-  "shipment-details": r2wc(ShipmentDetails, {
+  "shipment-details": r2wc(withProviders(ShipmentDetails), {
     props: {
       shipmentId: "string",
       shipmentData: "string",
